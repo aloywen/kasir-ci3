@@ -121,12 +121,12 @@ class Lapomzet extends CI_Controller {
         $tgl_dari=$_GET['tgl_dari'];
         $tgl_sampai=$_GET['tgl_sampai'];
 
-        // $d = date('Y-m-d 07:00:00', strtotime($tgl_dari));
-        // $s = date('Y-m-d 07:00:00', strtotime($tgl_sampai));
+        $d = date('Y-m-d 00:00:00', strtotime($tgl_dari));
+        $s = date('Y-m-d 24:00:00', strtotime($tgl_sampai));
 
         $this->db->select_sum('grand_total');
-        $this->db->where('tgl_nota >=', $tgl_dari);
-        $this->db->where('tgl_nota <=', $tgl_sampai);
+        $this->db->where('tgl >=', $d);
+        $this->db->where('tgl <=', $s);
         $query = $this->db->get('transaksi_penjualan')->row_array();
 
         // $query = $this->db->get_where('transaksi_pasien', ['posting' => 'belum'])->result_array();

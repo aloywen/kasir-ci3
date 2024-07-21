@@ -47,11 +47,13 @@ class Penjualan extends CI_Controller {
                     'admin' => 'admin',
                     'grand_total' => $fix,
                     'label' => htmlspecialchars($this->input->post('peruntukan', true)),
+                    'bayar' => htmlspecialchars($this->input->post('bayar', true)),
+                    'kembali' => htmlspecialchars($this->input->post('uang_kembali', true)),
  
             ];
             
             // INSERT TRANSAKSI PENJUALAN
-            $this->db->insert('transaksi_penjualan', $e);
+            // $this->db->insert('transaksi_penjualan', $e);
 
 
             $i = 0;
@@ -75,10 +77,10 @@ class Penjualan extends CI_Controller {
                 $i++;
                 // var_dump($dat);
                 
-                $this->db->insert("item_penjualan",$dat);
+                // $this->db->insert("item_penjualan",$dat);
             }
             
-            
+             
             // $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Transaksi Berhasil!</div>');
             $this->session->set_flashdata('item', $dat);
             $this->session->set_flashdata('items', $e);
@@ -101,14 +103,20 @@ class Penjualan extends CI_Controller {
         // $this->db->where('item_penjualan.no_nota', $t_penjualan['no_nota']); 
         // $data['data_penjualan'] = $this->db->get()->result_array();
 
-        $data['transaksi'] = $this->db->get_where('transaksi_penjualan', ['no_nota' => $t_penjualan])->row_array;
+        $data['transaksi'] = $this->db->get_where('transaksi_penjualan', ['no_nota' => $t_penjualan])->row_array();
 
+        // $this->db->select('*');
+        // $this->db->from('transaksi_penjualan');
+        // $this->db->join('item_penjualan', 'item_penjualan.no_nota = transaksi_penjualan.no_nota', 'left');
+        // $this->db->join('daftar_item', 'daftar_item.kode = item_penjualan.kode_item', 'left');
+        // $this->db->where('item_penjualan.no_nota', $t_penjualan); 
+        // $data['item_penjulan'] = $this->db->get()->result_array();
         $this->db->select('*');
-        $this->db->from('transaksi_penjualan');
-        $this->db->join('item_penjualan', 'item_penjualan.no_nota = transaksi_penjualan.no_nota', 'left');
+        $this->db->from('item_penjualan');
+        $this->db->join('transaksi_penjualan', 'transaksi_penjualan.no_nota = item_penjualan.no_nota');
         $this->db->join('daftar_item', 'daftar_item.kode = item_penjualan.kode_item', 'left');
         $this->db->where('item_penjualan.no_nota', $t_penjualan); 
-        $data['item_penjulan'] = $this->db->get()->result_array();
+        $data['item_penjualan'] = $this->db->get()->result_array();
 
         // $this->db->select_sum('total_harga');
         // $this->db->where('no_kwitansi', $t_penjualan['no_kwitansi']);

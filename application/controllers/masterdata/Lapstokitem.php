@@ -1,17 +1,17 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Lapstokobat extends CI_Controller {
+class Lapstokitem extends CI_Controller {
 
     public function index() {
 		$data = array(
-			'title' => "Laporan Stok Obat",
-			'menu' => "Laporan Stok Obat"
+			'title' => "Laporan Stok barang",
+			'menu' => "Laporan Stok barang"
 		);
 
 		// $data['item'] = $this->db->get('pembelian')->result_array();
 
-		$this->load->view('masterdata/lapstokobat/index', $data);
+		$this->load->view('masterdata/lapstokitem/index', $data);
 	}
 
 	public function addObat()
@@ -25,25 +25,25 @@ class Lapstokobat extends CI_Controller {
 		$this->load->view('pembelian/beli/add', $data);
 	}
 
-	public function store()
+	public function caristok()
     {
         $tgl_dari = $this->input->post('tgl_dari');
         $tgl_sampai = $this->input->post('tgl_sampai');
 
-        // $d = date('Y-m-d 07:00:00', strtotime($tgl_dari));
-        // $s = date('Y-m-d 07:00:00', strtotime($tgl_sampai));
+        $d = date('Y-m-d 00:00:00', strtotime($tgl_dari));
+        $s = date('Y-m-d 24:00:00', strtotime($tgl_sampai));
 
-        $this->db->select("obat_pasien.kode_obat, jasa.nama, stok_akhir.stok, obat_pembelian.jenis, SUM(qty) as totalObat");
-        $this->db->from('obat_pasien');
-        $this->db->join('jasa', 'jasa.kode = obat_pasien.kode_obat', 'left');
-        $this->db->join('stok_akhir', 'stok_akhir.kode_obat = jasa.kode', 'left');
-        $this->db->join('obat_pembelian', 'obat_pembelian.kode_obat = stok_akhir.kode_obat', 'left');
-        $this->db->group_by('jasa.nama');
-        $this->db->where('obat_pasien.ket', 'O');
-        $this->db->where('obat_pasien.tgl >=', $tgl_dari);
-        $this->db->where('obat_pasien.tgl <=', $tgl_sampai);
-        $this->db->where('obat_pasien.posting', 'belum');
-        $this->db->order_by('jasa.nama','ASC'); 
+        $this->db->select("item_penjualan.kode, daftar_item.nama, stok_akhir.stok, obat_pembelian.jenis, SUM(qty) as totalObat");
+        $this->db->from('item_penjualan');
+        $this->db->join('daftar_item', 'daftar_item.kode = item_penjualan.kode', 'left');
+        $this->db->join('stok_akhir', 'stok_akhir.kode = daftar_item.kode', 'left');
+        $this->db->join('obat_pembelian', 'obat_pembelian.kode = stok_akhir.kode', 'left');
+        $this->db->group_by('daftar_item.nama');
+        $this->db->where('item_penjualan.ket', 'O');
+        $this->db->where('item_penjualan.tgl >=', $d);
+        $this->db->where('item_penjualan.tgl <=', $s);
+        $this->db->where('item_penjualan.posting', 'belum');
+        $this->db->order_by('daftar_item.nama','ASC'); 
         $query = $this->db->get()->result_array();
 
         

@@ -103,16 +103,24 @@ $this->load->view('dist/_partials/header');
                       </tbody>
                       <tfoot>
                         <tr>
-                          <td colspan="2"><button id="addField" class="btn btn-warning">TAMBAH ITEM</button></td>
+                          <td colspan="1"><button id="addField" class="btn btn-warning py-2">TAMBAH ITEM</button></td>
                         </tr>
                         <tr>
                           <td colspan="2"><h3>TOTAL</h3></td>
                           <td colspan="3" class="text-right"><input type="text" name="grand_total" id="grand_total" class="form-control text-right g" readonly></td>
                         </tr>
-                              </tfoot>
+                        <tr>
+                          <td class=""><h3>BAYAR</h3></td>
+                          <td class="text-right"><input style="width:220px" type="number" name="bayar" id="bayar" class="form-control text-right g kembali"></td>
+
+                          <td ><h3>UANG KEMBALI</h3></td>
+                          <td class="text-right"><input type="number" name="uang_kembali" id="uang_kembali" class="form-control text-right g" readonly></td>
+                        
+                        </tr>
+                      </tfoot>
                     </table>
 
-                    <button type="submit" class="btn btn-primary">SIMPAN TRANSAKSI</button>
+                    <button type="submit" class="btn btn-primary py-2">SIMPAN TRANSAKSI</button>
                     </form>
                   </div>
             </div>

@@ -11,9 +11,9 @@ class Daftaradmin extends CI_Controller {
 
 		$data['admin'] = $this->db->get('admin')->result_array();
 
-        $query = $this->db->query("SELECT MAX(kode_admin) as m_admin from admin");
-        $da = $query->row();
-        $data['kode'] = $da->m_admin;
+        // $query = $this->db->query("SELECT MAX(kode) as m_admin from admin");
+        // $da = $query->row();
+        // $data['kode'] = $da->m_admin;
 
 		$this->load->view('masterdata/daftaradmin/index', $data);
 	}
@@ -24,8 +24,9 @@ class Daftaradmin extends CI_Controller {
         
 
             $data = [
-                'kode_admin' => htmlspecialchars($this->input->post('kode_admin', true)),
-                'nama_admin' => htmlspecialchars(strtoupper($this->input->post('nama_admin', true))),
+                'username' => htmlspecialchars($this->input->post('username', true)),
+                'nama' => htmlspecialchars(strtoupper($this->input->post('nama', true))),
+                'password' => 123456,
                 'ket' => 'b'
             ];
 
@@ -42,7 +43,7 @@ class Daftaradmin extends CI_Controller {
     public function editadmin($id)
     {
         
-            $nama = strtoupper($this->input->post('nama_admin'));
+            $nama = strtoupper($this->input->post('nama'));
 
 
             $this->db->set(['nama_admin' => $nama]);

@@ -282,7 +282,23 @@ $(document).ready(function() {
       // var t = $('#t').val([harga])
       // var har = [harga]
       
+      handleKembali()
       getTotal()
+
+    }
+
+    function handleKembali() {
+      let total = $('#grand_total').val()
+      let temp = total.replace(/\./g,'')
+
+      let bayar = $('#bayar').val()
+
+      console.log('ini total:',total)
+      console.log('ini temp:',temp)
+      
+
+      let kembalian = bayar - temp
+      $('#uang_kembali').val(kembalian.toLocaleString("id-ID"))
     }
     
     function handleAuto() {
@@ -589,6 +605,8 @@ $(document).ready(function() {
       }
     }
 
+
+
     function deleteRow() {
       var currentEle, rowNo;
       currentEle = $(this);
@@ -606,6 +624,7 @@ $(document).ready(function() {
       $(document).on('focus', '.autopasien', handlePasien)
       $(document).on('change', '.qty', handleTotal)
       $(document).on('click', '.delete_row', deleteRow)
+      $(document).on('keyup', '.kembali', handleKembali)
     }
 
     registerEvents();
@@ -625,7 +644,7 @@ $(document).ready(function() {
                 'tgl_sampai': tgl_sampai
                },
               success:function(data){
-                var hasil = JSON.parse(data);  
+                // var hasil = JSON.parse(data);  
                console.log(hasil);
                let total = parseInt(hasil.grand_total)
 
@@ -636,6 +655,37 @@ $(document).ready(function() {
                 } else {
                   inputOmzet.value=0
                 }
+              //  total === null ? inputOmzet.value="0" : inputOmzet.value=total.toLocaleString('id-ID');
+                
+              }
+        });
+                   
+    }
+
+    function autofillStok(){
+        var tgl_dari = document.getElementById('tgl_dari').value;
+        var tgl_sampai = document.getElementById('tgl_sampai').value;
+
+        // console.log(tgl_dari);
+        // console.log(tgl_sampai);
+        $.ajax({
+              url:"<?php echo base_url();?>/masterdata/lapstokitem/caristok",
+              data: {
+                'tgl_dari': tgl_dari,
+                'tgl_sampai': tgl_sampai
+               },
+              success:function(data){
+                let hasil = JSON.parse(data);  
+               console.log(hasil);
+              //  let total = parseInt(hasil.grand_total)
+
+              //  let inputOmzet = document.getElementById('total_omzet')
+              
+              //   if(total){
+              //     inputOmzet.value=total.toLocaleString('id-ID')
+              //   } else {
+              //     inputOmzet.value=0
+              //   }
               //  total === null ? inputOmzet.value="0" : inputOmzet.value=total.toLocaleString('id-ID');
                 
               }

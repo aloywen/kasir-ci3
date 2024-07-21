@@ -32,11 +32,11 @@ $this->load->view('dist/_partials/header');
                 <div class="form-row d-flex r">
                     <div class="form-group d-flex align-items-center col-md-6 row">
                         <label for="tgl_dari" class="col-md-5">Mulai tanggal</label>
-                        <input type="datetime-local" id="tgl_dari" name="tgl_dari" class="form-control col-md-7 l">
+                        <input type="date" id="tgl_dari" name="tgl_dari" class="form-control col-md-7 l">
                     </div>
                     <div class="form-group d-flex align-items-center col-md-6 row">  
                         <label for="tgl_sampai" class="col-md-5">Sampai Tanggal</label>
-                        <input type="datetime-local" id="tgl_sampai" name="tgl_sampai" class="form-control col-md-7 l" onchange="return autofillOmzet();">
+                        <input type="date" id="tgl_sampai" name="tgl_sampai" class="form-control col-md-7 l" onchange="return autofillOmzet();">
                     </div>
                 </div>
 

@@ -22,12 +22,12 @@ $this->load->view('dist/_partials/header');
       <div class="main-content">
         <section class="section">
           <div class="section-header">
-            <h1>Laporan Stok Obat</h1>
+            <h1>Laporan Stok Barang</h1>
           </div>
 
           <div class="section-body">
 
-              <form action="<?= base_url('masterdata/lapstokobat/store'); ?>" method="post">
+              <!-- <form action="<?= base_url('masterdata/lapstokobat/store'); ?>" method="post"> -->
 
                 <div class="form-row d-flex r">
                     <div class="form-group d-flex align-items-center col-md-6 row">
@@ -36,7 +36,7 @@ $this->load->view('dist/_partials/header');
                     </div>
                     <div class="form-group d-flex align-items-center col-md-6 row">  
                         <label for="tgl_sampai" class="col-md-5">Sampai Tanggal</label>
-                        <input type="date" id="tgl_sampai" name="tgl_sampai" class="form-control col-md-7 l">
+                        <input type="date" id="tgl_sampai" name="tgl_sampai" class="form-control col-md-7 l" onchange="return autofillStok();">
                     </div>
                 </div>
 
@@ -52,9 +52,9 @@ $this->load->view('dist/_partials/header');
                   </div>
                 </div> -->
 
-                <button type="submit" class="btn btn-success px-4 py-2">Posting</button>
+                <button type="submit" class="btn btn-primary px-4 py-2">Print</button>
  
-              </form>
+              <!-- </form> -->
 
           </div>
 

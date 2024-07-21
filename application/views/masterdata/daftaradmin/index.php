@@ -43,7 +43,7 @@ $this->load->view('dist/_partials/header');
                         <thead>
                           <tr class="sticky-top bg-light">
                             <th style="width: 10%"></th>
-                            <th scope="col">Kode</th>
+                            <th scope="col">Username</th>
                             <th scope="col">Nama Admin</th>
                           </tr>
                         </thead>
@@ -55,8 +55,8 @@ $this->load->view('dist/_partials/header');
                               <button class="btn btn-warning px-2 py-2 mr-2" data-toggle="modal" data-target="#editRoleModal<?= $r['id'] ?>"><i class="fas fa-pencil-alt"></i></button>
                               <a href="<?= base_url('masterdata/daftaradmin/hapusAdmin/') . $r['id']; ?>" onclick="return confirm('yakin dihapus?')" class="btn btn-danger px-2 py-2 mr-2 text-white"><i class="fas fa-trash-alt"></i></a>
                             </td>
-                            <td ><?= $r['kode_admin']; ?></td>
-                            <td ><?= $r['nama_admin']; ?></td>
+                            <td ><?= $r['username']; ?></td>
+                            <td ><?= $r['nama']; ?></td>
                           </tr>
                         <?php endforeach; ?>
                         </tbody>
@@ -87,19 +87,19 @@ $this->load->view('dist/_partials/header');
 
               <form action="<?= base_url('masterdata/daftaradmin/store'); ?>" method="post">
 
-              <?php
+              <!-- <?php
               $nourut = substr($kode, 0, 6);
               $m_record = floatval($nourut) + 1;
               
-              ?>
+              ?> -->
                 <div class="modal-body">
                     <div class="form-group col-md-12">
-                      <h6 for="kode_admin">Kode</h6>
-                      <input type="text" class="form-control" name="kode_admin" id="kode_admin" readonly value="<?= sprintf("%06s", $m_record) ?>">
+                      <h6 for="username">Username</h6>
+                      <input type="text" class="form-control" name="username" id="username">
                     </div>
                     <div class="form-group col-md-12">
                       <h6 for="nama_admin">Nama Admin</h6>
-                      <input type="text" class="form-control" name="nama_admin" id="nama_admin" required autocomplete="off">
+                      <input type="text" class="form-control" name="nama" id="nama" required autocomplete="off">
                     </div>
                 </div>
                 <div class="modal-footer bg-whitesmoke br">
@@ -127,11 +127,11 @@ $this->load->view('dist/_partials/header');
                 <div class="modal-body">
                     <div class="form-group col-md-6">
                       <h6 for="kode_admin">Kode</h6>
-                      <input type="text" class="form-control" name="kode_admin" id="kode_admin" value="<?= $r['kode_admin']; ?>" readonly>
+                      <input type="text" class="form-control" name="username" id="username" value="<?= $r['username']; ?>" readonly>
                     </div>
                     <div class="form-group col-md-12">
                       <h6 for="nama_admin">Nama Admin</h6>
-                      <input type="text" class="form-control" name="nama_admin" id="nama_admin" value="<?= $r['nama_admin']; ?>" required>
+                      <input type="text" class="form-control" name="nama_admin" id="nama_admin" value="<?= $r['nama']; ?>" required>
                     </div>
                 </div>
                 <div class="modal-footer bg-whitesmoke br">

@@ -33,7 +33,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
                 <li class="<?php echo $this->uri->segment(2) == 'lapomzet' ? 'active' : ''; ?>"><a class="nav-link" href="<?php echo base_url(); ?>masterdata/lapomzet"><span>Lap. Omzet</span></a></li>
 
-                <li class="<?php echo $this->uri->segment(2) == 'lapstokobat' ? 'active' : ''; ?>"><a class="nav-link" href="<?php echo base_url(); ?>masterdata/lapstokitem"><span>Lap. Stok Item</span></a></li>
+                <li class="<?php echo $this->uri->segment(2) == 'lapstokitem' ? 'active' : ''; ?>"><a class="nav-link" href="<?php echo base_url(); ?>masterdata/lapstokitem"><span>Lap. Stok Barang</span></a></li>
 
               </ul>
             </li>
