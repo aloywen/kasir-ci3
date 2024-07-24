@@ -215,7 +215,7 @@ $(document).ready(function() {
   let kode = document.getElementsByClassName('isi');
   let o = kode[0]
   let a = o.querySelectorAll("tr")
-  console.log(a.length);
+  // console.log(a.length);
 
   let count = a.length
   
@@ -293,8 +293,8 @@ $(document).ready(function() {
 
       let bayar = $('#bayar').val()
 
-      console.log('ini total:',total)
-      console.log('ini temp:',temp)
+      // console.log('ini total:',total)
+      // console.log('ini temp:',temp)
       
 
       let kembalian = bayar - temp
@@ -644,8 +644,8 @@ $(document).ready(function() {
                 'tgl_sampai': tgl_sampai
                },
               success:function(data){
-                // var hasil = JSON.parse(data);  
-               console.log(hasil);
+                var hasil = JSON.parse(data);  
+              //  console.log(hasil);
                let total = parseInt(hasil.grand_total)
 
                let inputOmzet = document.getElementById('total_omzet')
@@ -663,11 +663,11 @@ $(document).ready(function() {
     }
 
     function autofillStok(){
-        var tgl_dari = document.getElementById('tgl_dari').value;
-        var tgl_sampai = document.getElementById('tgl_sampai').value;
+        let tgl_dari = document.getElementById('tgl_d').value;
+        let tgl_sampai = document.getElementById('tgl_s').value;
 
-        // console.log(tgl_dari);
-        // console.log(tgl_sampai);
+        console.log(tgl_dari);
+        console.log(tgl_sampai);
         $.ajax({
               url:"<?php echo base_url();?>/masterdata/lapstokitem/caristok",
               data: {
@@ -675,7 +675,7 @@ $(document).ready(function() {
                 'tgl_sampai': tgl_sampai
                },
               success:function(data){
-                let hasil = JSON.parse(data);  
+              let hasil = JSON.parse(data);  
                console.log(hasil);
               //  let total = parseInt(hasil.grand_total)
 

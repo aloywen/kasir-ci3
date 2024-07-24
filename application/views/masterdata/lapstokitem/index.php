@@ -27,34 +27,23 @@ $this->load->view('dist/_partials/header');
 
           <div class="section-body">
 
-              <!-- <form action="<?= base_url('masterdata/lapstokobat/store'); ?>" method="post"> -->
+              <form action="<?= base_url('masterdata/lapstokitem/print'); ?>" method="post">
 
                 <div class="form-row d-flex r">
                     <div class="form-group d-flex align-items-center col-md-6 row">
-                        <label for="tgl_dari" class="col-md-5">Mulai tanggal</label>
-                        <input type="date" id="tgl_dari" name="tgl_dari" class="form-control col-md-7 l">
+                        <label for="tgl_d" class="col-md-5">Mulai tanggal</label>
+                        <input type="date" id="tgl_d" name="tgl_d" class="form-control col-md-7 l">
                     </div>
                     <div class="form-group d-flex align-items-center col-md-6 row">  
-                        <label for="tgl_sampai" class="col-md-5">Sampai Tanggal</label>
-                        <input type="date" id="tgl_sampai" name="tgl_sampai" class="form-control col-md-7 l" onchange="return autofillStok();">
+                        <label for="tgl_s" class="col-md-5">Sampai Tanggal</label>
+                        <input type="date" id="tgl_s" name="tgl_s" class="form-control col-md-7 l">
                     </div>
                 </div>
 
-                <!-- <div class="form-row r">
-                  <div class="form-group d-flex align-items-center col-md-8 row">
-                    <label for="filldokter" class="col-md-4">Kasir</label>
-                    <select id="filldokter" name="filldokter" class="form-control col-md-6 l" onchange="return autofillDokter();">
-                      <option selected ></option>
-                      <?php foreach ($bidan as $p) : ?>
-                      <option value="<?= $p['nama_bidan'] ?>"><?= $p['kode_bidan'] ?> - <?= $p['nama_bidan'] ?></option>
-                      <?php endforeach; ?>
-                    </select>
-                  </div>
-                </div> -->
 
                 <button type="submit" class="btn btn-primary px-4 py-2">Print</button>
  
-              <!-- </form> -->
+              </form>
 
           </div>
 

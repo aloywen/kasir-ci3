@@ -53,7 +53,7 @@ class Penjualan extends CI_Controller {
             ];
             
             // INSERT TRANSAKSI PENJUALAN
-            // $this->db->insert('transaksi_penjualan', $e);
+            $this->db->insert('transaksi_penjualan', $e);
 
 
             $i = 0;
@@ -77,7 +77,7 @@ class Penjualan extends CI_Controller {
                 $i++;
                 // var_dump($dat);
                 
-                // $this->db->insert("item_penjualan",$dat);
+                $this->db->insert("item_penjualan",$dat);
             }
             
              
@@ -91,10 +91,10 @@ class Penjualan extends CI_Controller {
     public function print()
     {
 
-        // $dat = $this->session->flashdata('item');
-        // $t_penjualan = $this->session->flashdata('items');
+        $dat = $this->session->flashdata('item');
+        $t_penjualan = $this->session->flashdata('items');
 
-        $t_penjualan = "0724/0001";
+        // $t_penjualan = "0724/0001";
 
         // $this->db->select('*');
         // $this->db->from('transaksi_penjualan');
@@ -103,7 +103,7 @@ class Penjualan extends CI_Controller {
         // $this->db->where('item_penjualan.no_nota', $t_penjualan['no_nota']); 
         // $data['data_penjualan'] = $this->db->get()->result_array();
 
-        $data['transaksi'] = $this->db->get_where('transaksi_penjualan', ['no_nota' => $t_penjualan])->row_array();
+        $data['transaksi'] = $this->db->get_where('transaksi_penjualan', ['no_nota' => $t_penjualan['no_nota']])->row_array();
 
         // $this->db->select('*');
         // $this->db->from('transaksi_penjualan');
@@ -115,7 +115,7 @@ class Penjualan extends CI_Controller {
         $this->db->from('item_penjualan');
         $this->db->join('transaksi_penjualan', 'transaksi_penjualan.no_nota = item_penjualan.no_nota');
         $this->db->join('daftar_item', 'daftar_item.kode = item_penjualan.kode_item', 'left');
-        $this->db->where('item_penjualan.no_nota', $t_penjualan); 
+        $this->db->where('item_penjualan.no_nota', $t_penjualan['no_nota']); 
         $data['item_penjualan'] = $this->db->get()->result_array();
 
         // $this->db->select_sum('total_harga');
