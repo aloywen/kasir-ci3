@@ -16,7 +16,7 @@
                                     <div class="row d-flex justify-content-center align-items-center flex-column">
                                         <div class="col-10">
                                             <div class="sidebar-brand-icon">
-                                            <h3 class="text-center">KLINIK DHARMA BAKTI</h3>
+                                            <h3 class="text-center">KANTIN RS</h3>
                                             </div><br/>
                                         </div>
                                         <h1 class="h4 text-gray-900 mb-4">Login</h1>
@@ -27,7 +27,7 @@
 
                                 <form class="user" method="post" action="<?= base_url('auth/index'); ?>">
                                     <div class="form-group">
-                                        <input type="text" class="form-control form-control-user" id="username" name="username" placeholder="Masukan Username Anda ..." value="<?= set_value('username'); ?>">
+                                        <input type="text" class="form-control form-control-user" id="username" name="username" placeholder="Username" value="<?= set_value('username'); ?>">
                                         <?= form_error('username', '<small class="text-danger pl-3">', '</small>'); ?>
                                     </div>
                                     <div class="form-group">

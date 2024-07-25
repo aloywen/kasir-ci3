@@ -12,10 +12,9 @@ class Auth extends CI_Controller
     public function index()
     {
         if ($this->session->userdata('username')) {
-            redirect('user');
+            redirect()->back();
         }
 
-        // $data['barang'] = $this->db->get_where('barang', ['status' => ''] )->result_array();
 
 
         $this->form_validation->set_rules('username', 'Username', 'trim|required');
@@ -26,7 +25,7 @@ class Auth extends CI_Controller
             $this->load->view('templates/auth_header', $data);
             $this->load->view('auth/login', $data);
             $this->load->view('templates/auth_footer');
-        } else {
+        } else { 
             // validasinya success
             $this->_login();
         }
@@ -35,26 +34,36 @@ class Auth extends CI_Controller
 
     private function _login()
     {
-        $username = 'admin';
-        $password = 'password';
+        $username = $this->input->post('username');
+        $password = $this->input->post('password');
 
-        // $user = $this->db->get_where('user', ['username' => $username])->row_array();
+        $user = $this->db->get_where('admin', ['username' => $username])->row_array();
 
         
+            if($user){
                 // cek password
                 if ($password == $user['password']) {
                     $data = [
-                        'username' => $user['username'],
-                        'role_id' => $user['role_id']
+                        'user' => $user['nama'],
+                        'role_id' => $user['role']
                     ];
                     $this->session->set_userdata($data);
-                    redirect('admin');
+                    if($user['role'] == 2){
+                        redirect('kasir/penjualan');
+                    }
+                    if($user['role'] == 1){
+                        redirect('/');
+                    }
                       
                 } else {
-                    $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">Password Salah!</div>');
+                    $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">Username / Password Salah!</div>');
                     redirect('auth');
                 }
-             
+            } else {
+
+                $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">Username / Password Salah!</div>');
+                redirect('auth');
+            }
         
     }
 
@@ -63,6 +72,7 @@ class Auth extends CI_Controller
     public function logout()
     {
         $this->session->unset_userdata('username');
+        $this->session->unset_userdata('role');
 
         $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Anda Telah Logout!</div>');
         redirect('auth');

@@ -68,6 +68,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 
 
+            <ul>
+              <li>
+                <form action="<?= base_url();?>/auth/logout">
+                <button class="btn btn-primary mt-5 px-5">Logout</button>
+                </form>
+              </li>
+            </ul>
 
             <!-- PENGATURAN -->
             <!-- <li class="dropdown <?php echo $this->uri->segment(2) == 'daftaruser' || $this->uri->segment(2) == 'aksesuser' || $this->uri->segment(2) == 'pengaturanumum' || $this->uri->segment(2) == 'settingnomortransaksi' || $this->uri->segment(2) == 'logaktifitas' ? 'active' : ''; ?>">
