@@ -36,8 +36,8 @@ $this->load->view('dist/_partials/header');
                 <form action="<?= base_url('kasir/penjualan/store'); ?>" method="post">
                         <?php
                         
-                     $dat = $no_kwitansi['no_nota'];
-                     $nourut = substr($dat, 0, 2);
+                     $dat = $no_nota['no_nota'];
+                     $nourut = substr($dat, 5, 4);
                      $m_record = $nourut + 1;
 
                     //  echo $nourut;

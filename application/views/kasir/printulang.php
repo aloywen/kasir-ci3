@@ -6,6 +6,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Print</title>
     <style>
+        body {
+            width: 303px;
+        }
         .tes {
             margin-top: -10px;
             margin-bottom: -12px;
@@ -29,7 +32,7 @@
     <link rel="stylesheet" href="<?php echo base_url(); ?>assets/modules/bootstrap/css/bootstrap.min.css">
 
 </head>
-<body class="px-5">
+<body>
 
 <?php
 
@@ -72,99 +75,54 @@ function terbilang($nilai) {
 
 ?>
 
-<h5>KLINIK DHARMA BHAKTI</h5>
-    <h5 class="re">Jl. Raya Sumber Jaya No.18 Tambun - Bekasi</h5>
-    <h5>Telp. 021 22162106
-        <!-- <?php date_default_timezone_set('Asia/Jakarta'); 
-    echo date('h:i:s')?> -->
-    </h5>
+    <h6>KANTIN RS</h6>
+    <h6 class="re"><?php date_default_timezone_set('Asia/Jakarta'); 
+            echo date('d F Y')
+            ?></h6>
 
-    <h5 class="text-right">Kwitansi : <?= $data_pasien['no_kwitansi'] ?></h5>
-    <h4 class="text-center">K W I T A N S I</h4>
-
-    <div class="row">
-        <h5 class="col-md-6">No. RM :  <?= $data_pasien['medical_record'] ?></h5>
-        <h5 class="col-md-6">Register  : <?= $data_pasien['register'] ?></h5>
-    </div>
-
-    <h5 class="re">Nm. pasien : <?= $data_pasien['nama_pasien'] ?> </h5>
-
-    <div class="row">
-        <h5 class="col-md-6">Penanggung : <?= $data_pasien['penanggung'] ?></h5>
-        <h5 class="col-md-6">Nm. Dokter : <?= $data_pasien['nama_dokter'] ?></h5>
-    </div>
+    <h6 class="text-right">No : <?= $transaksi['no_nota'] ?></h6>
 
     <hr class="g">
-    <div class="row tes">
-        <h5 class="col-md-2">No.</h5>
-        <h5 class="col-md-6">Keterangan</h5>
-        <h5 class="col-md-3">Jumlah (Rp)</h5>
+    <div class="row ">
+        <h6 class="col-md-1">No.</h6>
+        <h6 class="col-md-5">Keterangan</h6>
+        <h6 class="col-md-5">Jumlah (Rp)</h6>
     </div>
     <hr class="g">
     <?php $no = 1;
-    // var_dump($jasa );
     ?>
-    <?php foreach ($jasa as $r) : ?>
+    <?php foreach ($item_penjualan as $r) : ?>
         <div class="row is">
-            <h5 class="col-md-2"><?= $no++ ?></h5>
-            <h5 class="col-md-6"><?php if($r['induk'] == 'Konsultasi' || $r['induk'] == 'Konsultasi OT-1' || $r['induk'] == 'Konsultasi OT-2'){
-                echo "Jasa Konsultasi Dr. Umum";
-            } else { echo $r['nama']; }?></h5>
-            <h5 class="col-md-3">Rp <?= number_format($r['total_harga'],0,',','.'); ?></h5>
+            <h6 class="col-md-1"><?= $no++ ?></h6>
+            <h6 class="col-md-6"><?= $r['nama']; ?></h6>
+            <h6 class="col-md-4">Rp <?= number_format($r['total_harga'],0,',','.'); ?></h6>
         </div>
     <?php endforeach; ?>
     
-    <?php
-    // var_dump($total_obat);
-    if($total_obat == null){
-        echo " ";
-    }else{
-        echo "<div class='row iss'>";
-        echo "<h5 class='col-md-2'></h5>";
-        echo "<h5 class='col-md-6'>OBAT-OBATAN</h5>";
-        echo "<h5 class='col-md-3'>Rp ".number_format($total_obat,0,',','.'); "</h5>";
-        echo "</div>";
-    }
-    ?>
     
     <hr class="g">
     <div class="row tes">
-        <h5 class="col-md-2">Total Biaya</h5>
-        <h5 class="col-md-6"></h5>
-        <h5 class="col-md-3">Rp <?= number_format($data_pasien['grand_total'],0,',','.'); ?></h5>
+        <h6 class="col-md-6">Total :</h6>
+        <h6 class="col-md-1"></h6>
+        <h6 class="col-md-4">Rp <?= number_format($transaksi['grand_total'],0,',','.'); ?></h6>
+    </div>
+    <hr class="g">
+    <div class="row tes">
+        <h6 class="col-md-6">Tunai :</h6>
+        <h6 class="col-md-1"></h6>
+        <h6 class="col-md-4">Rp <?= number_format($transaksi['bayar'],0,',','.'); ?></h6>
+    </div>
+    <br>
+    <div class="row tes">
+        <h6 class="col-md-6">Kembali :</h6>
+        <h6 class="col-md-1"></h6>
+        <h6 class="col-md-4">Rp <?= number_format($transaksi['kembali'],0,',','.'); ?></h6>
     </div>
     <hr class="g">
 
-    <h5>Diagnosa : <?= $data_pasien['diagnosa'] ?></h5>
-    <h5 class="re">Terbilang : ##<?= terbilang($data_pasien['grand_total']) ?> RUPIAH##</h5>
-
     <div class="row">
         <div class="col-md-6">
-            <h5>Copy Resep</h5>
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="row d-flex-wrap">
-                    <?php foreach ($data_obat as $r) : ?>
-                        <?php if($r['ket'] == 'O'){
-                            echo "<div class='col-md-6'>";
-                            echo "-" .$r['nama'];  echo "  (" .$r['qty']. ")";
-                            echo "</div>";
-                        }?>
-                    <?php endforeach; ?>
-                    </div>
-                </div>
-            </div> 
-        </div>
-        <div class="col-md-6">
-            <h5 class="text-center">Bekasi, <?php date_default_timezone_set('Asia/Jakarta'); 
-            echo date('d F Y')
-            ?></h5>
-            <br>
-            <br>
-            <br>
-            <h5 class="text-center"> <?php if($bidan == null){
-                echo '';
-            } else { echo $bidan['nama_bidan']; }  ?> </h5>
+            <h6>Kasir : <?php echo $transaksi['admin'];  ?> </h6>
 
         </div>
     </div>
@@ -172,7 +130,7 @@ function terbilang($nilai) {
 
 
     <script>
-        my()
+        // my()
 
         function my() {
             window.print();
@@ -183,7 +141,7 @@ function terbilang($nilai) {
         }
 
         function closePrintView() {
-            window.location.href =  'http://localhost/klinik/kasir/pasien/riwayatpasien'
+            window.location.href =  'http://localhost/kasir/kasir/penjualan'
         }
     </script>
     </body>

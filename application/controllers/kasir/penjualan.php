@@ -16,7 +16,7 @@ class Penjualan extends CI_Controller {
 			'menu' => "Kasir Penjualan"
 		);
         
-        $data['no_kwitansi'] = $this->db->order_by('id',"desc")
+        $data['no_nota'] = $this->db->order_by('id',"desc")
         ->limit(1)
         ->get('transaksi_penjualan')
         ->row_array();
@@ -43,6 +43,7 @@ class Penjualan extends CI_Controller {
     {
             $grand_total = $this->input->post('grand_total');
             $fix = preg_replace("/[^0-9]/", "", $grand_total);
+            $kembali = preg_replace("/[^0-9]/", "", $grand_total);
             date_default_timezone_set('Asia/Jakarta');
             $tgl = date('Y-m-d G:i:s');
 
@@ -51,11 +52,11 @@ class Penjualan extends CI_Controller {
         
             $e = [
                     'no_nota' => htmlspecialchars($this->input->post('no_nota', true)),
-                    'admin' => 'admin',
+                    'admin' => $this->session->userdata('user'),
                     'grand_total' => $fix,
                     'label' => htmlspecialchars($this->input->post('peruntukan', true)),
                     'bayar' => htmlspecialchars($this->input->post('bayar', true)),
-                    'kembali' => htmlspecialchars($this->input->post('uang_kembali', true)),
+                    'kembali' => $kembali,
  
             ];
             
@@ -154,7 +155,7 @@ class Penjualan extends CI_Controller {
 
         $no_nota = substr_replace($no, '/', 4, 0);
 
-        var_dump($no_nota);
+        // var_dump($no_nota);
 
         $data['transaksi'] = $this->db->get_where('transaksi_penjualan', ['no_nota' => $no_nota])->row_array();
 
@@ -163,33 +164,10 @@ class Penjualan extends CI_Controller {
         $this->db->join('item_penjualan', 'item_penjualan.no_nota = transaksi_penjualan.no_nota', 'left');
         $this->db->join('daftar_item', 'daftar_item.kode = item_penjualan.kode_item', 'left');
         $this->db->where('item_penjualan.no_nota', $no_nota); 
-        $data['daftar_item'] = $this->db->get()->result_array();
-
-        $this->db->select_sum('total_harga');
-        $this->db->where('ket', 'O');
-        $this->db->where('no_kwitansi', $no_nota);
-        $query = $this->db->get('obat_pasien')->row_array();
-        $data['total_obat'] = $query['total_harga'];
-        
-
-        $this->db->select('*');
-        $this->db->from('transaksi_penjualan');
-        $this->db->join('admin', 'admin.kode_admin = transaksi_penjualan.admin');
-        $this->db->where('transaksi_penjualan.no_nota', $no_nota); 
-        $data['admin'] = $this->db->get()->row_array();
+        $data['item_penjualan'] = $this->db->get()->result_array();
 
         
-        // $this->db->select('*'); 
-        // $this->db->from('jasa');
-        // $this->db->join('jasa_pasien', 'jasa_pasien.kodejasa = jasa.kode');
-        // $this->db->where('jasa_pasien.no_kwitansi', $contoh2); 
-        // $data['jasa'] = $this->db->get()->result_array();
-
-        // var_dump($jasa);
-        // var_dump('<br/>');
-        // var_dump($dataaa);
-        
-        // $this->load->view('kasir/printulang', $data);
+        $this->load->view('kasir/printulang', $data);
     }
 
     public function transaksiperhari()
