@@ -9,7 +9,7 @@ class Penjualan extends CI_Controller {
         is_logged_in();
 
     }
-
+ 
     public function index() {
 		$data = array(
 			'title' => "Kasir Penjualan",
@@ -261,104 +261,64 @@ class Penjualan extends CI_Controller {
     {
 
         $data = array(
-			'title' => "Detail Transaksi pasien",
-			'menu' => "Detail Transaksi pasien"
+			'title' => "Detail Transaksi",
+			'menu' => "Detail Transaksi"
 		);
 
-        $contoh1 = substr_replace($no, '/', 2, 0);
-        $contoh2 = substr_replace($contoh1, '/', 5, 0);
+        // $tambahgaring1 = substr_replace($no, '/', 2, 0);
+        $tambahgaring = substr_replace($no, '/', 4, 0);
+
+        // var_dump($contoh1);
+        // var_dump($contoh2);
 
         $this->db->select('*');
-        $this->db->from('obat_pasien');
-        $this->db->join('transaksi_pasien', 'transaksi_pasien.no_kwitansi = obat_pasien.no_kwitansi', 'left');
-        $this->db->join('jasa', 'jasa.kode = obat_pasien.kode_obat', 'left');
-        // $this->db->join('jasa_pasien', 'jasa_pasien.no_kwitansi = transaksi_pasien.no_kwitansi', 'left');
-        $this->db->where('obat_pasien.no_kwitansi', $contoh2);  
-        $data['obat'] = $this->db->get()->result_array();
-        // $this->db->select('*');
-        // $this->db->from('obat_pasien');
-        // $this->db->join('jasa', 'jasa.kode = obat_pasien.kode_obat', 'left');
-        // $this->db->join('jasa_pasien', 'jasa_pasien.kodejasa = jasa.kode', 'left');
-        // $this->db->where('obat_pasien.no_kwitansi', $contoh2);  
-        // $data['obat'] = $this->db->get()->result_array();
- 
-        $this->db->select('*');
-        $this->db->from('transaksi_pasien');
-        $this->db->join('pasien', 'pasien.medical_record = transaksi_pasien.medical_record', 'left');
-        $this->db->join('dokter', 'dokter.kode_dokter = transaksi_pasien.dokter', 'left');
-        $this->db->join('bidan', 'bidan.kode_bidan = transaksi_pasien.bidan', 'left');
-        $this->db->where('transaksi_pasien.no_kwitansi', $contoh2); 
-        $data['transaksi'] = $this->db->get()->row_array();
+        $this->db->from('item_penjualan');
+        $this->db->join('transaksi_penjualan', 'transaksi_penjualan.no_nota = item_penjualan.no_nota', 'left');
+        $this->db->join('daftar_item', 'daftar_item.kode = item_penjualan.kode_item', 'left');
+        $this->db->where('item_penjualan.no_nota', $tambahgaring);  
+        $data['item'] = $this->db->get()->result_array();
 
-        $data['dokter'] = $this->db->get('dokter')->result_array();
-        $data['bidan'] = $this->db->get('bidan')->result_array();
+        $data['transaksi'] = $this->db->get_where('transaksi_penjualan', ['no_nota' => $tambahgaring])->row_array();
 
-        // $data['transaksi'] = $this->db->get_where('transaksi_pasien', ['no_kwitansi' => $contoh2])->row_array();
-
-        // var_dump($obat);
-		$this->load->view('kasir/detailpasien', $data);
+        // var_dump($tambahgaring2);
+        // var_dump($data);
+		$this->load->view('kasir/detailtransaksi', $data);
         
     }
 
     public function editKasir($no)
     {
+        $tambahgaring = substr_replace($no, '/', 4, 0);
+
+
         $no_kwitansi = $this->input->post('no_kwitansi');
-        $a = $this->input->post('kode');
-        $b = $this->input->post('obat');
-        $c = $this->input->post('qty');
-        $d = $this->input->post('total_harga');
-        $fee = $this->input->post('fee');
-        $keterangan = $this->input->post('ket');
-        $status = $this->input->post('status');
-        $jns_pasien = $this->input->post('jns_pasien');
-        $penanggung = $this->input->post('penanggung');
-        $perusahaan = $this->input->post('perusahaan');
-        $asuransi = $this->input->post('asuransi');
-        $diagnosa = $this->input->post('diagnosa');
-        $ics = $this->input->post('ics');
-        $grand_total = $this->input->post('grand_total');
-        $induk = $this->input->post('induk');
-        $tempDokter = $this->input->post('kode_dokter');
-        $newDokter = $this->input->post('dokter');
-        $idDokter = substr($newDokter, 0, 6);
-        $tempBidan = $this->input->post('kode_bidan');
-        $newBidan = $this->input->post('bidan');
-        $idBidan = substr($newBidan, 0, 6);
+        $kode = $this->input->post('kode');
+        $item = $this->input->post('nama');
+        $qty = $this->input->post('qty');
+        $harga = $this->input->post('harga');
+        $total_harga = $this->input->post('total_harga');
+        $temp_grand_total = $this->input->post('grand_total');
+        $bayar = $this->input->post('bayar');
+        $kembali = $this->input->post('kembali');
+        $bayar = $this->input->post('bayar');
 
-        $dokter = '';
-        if($tempDokter == $newDokter){
-            $dokter = $tempDokter;
-        } else if ( $tempDokter !== $newDokter){
-            $dokter = $idDokter;
-        }
-        $bidan = '';
-        if($tempBidan == $newBidan){
-            $bidan = $tempBidan;
-        } else if ( $tempBidan !== $newBidan){
-            $bidan = $idBidan;
-        }
 
-        $this->db->where('no_kwitansi', $no_kwitansi);
-        $this->db->delete('obat_pasien');
+        $this->db->where('no_nota', $tambahgaring);
+        $this->db->delete('item_penjualan');
 
-        $totalHargaa = preg_replace("/[^0-9]/", "", $d);
-        $fix = preg_replace("/[^0-9]/", "", $grand_total);
+        $totalHarga = preg_replace("/[^0-9]/", "", $total_harga);
+        $grand_total = preg_replace("/[^0-9]/", "", $temp_grand_total);
 
         $i = 0; 
         // INSERT OBAT PASIEN
-        foreach($a as $row){
+        foreach($kode as $row){
             $dat = array(
-                    'kode_obat'=> $row,
-                    'no_kwitansi' => $this->input->post('no_kwitansi'),
-                    'rm_pasien' => $this->input->post('kode_pasien'),
-                    'dokter' => $dokter,
-                    'qty'=> $c[$i],
+                    'kode'=> $row,
+                    'no_nota' => $tambahgaring,
+                    'qty'=> $qty[$i],
+                    'harga'=> $harga[$i],
                     'total_harga'=> $totalHargaa[$i],
-                    'fee'=> $fee[$i]*$c[$i],
-                    'tgl' => date('Y-m-d G:i:s'),
-                    'ket'=> $keterangan[$i],
-                    'induk'=> $induk[$i],
-                    'posting'=> 'belum',
+                    'tgl' => date('Y-m-d')
             ); 
             $i++;
             // var_dump($dat);

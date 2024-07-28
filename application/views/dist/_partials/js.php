@@ -161,7 +161,7 @@ $(document).ready(function() {
             <input data-field-name="item" type="text" class="l form-control col-md-12 autocomplete" value="" name="item[]" id="item_${count}" autocomplete="off">
           </td>
           <td>
-            <input onchange="total();" type="number" class="l form-control qty" value="" name="qty[]" id="qty_${count}">
+            <input onchange="total();" type="text" inputmode="numeric" class="l form-control qty" value="" name="qty[]" id="qty_${count}">
           </td>
           <td>
             <input type="text" class="l form-control" value="" name="harga[]" id="harga_${count}" readonly>
@@ -179,37 +179,37 @@ $(document).ready(function() {
     });
 });
  
-$(document).ready(function() {
-  let count = 1
-    $("#addFieldl").click(function (e) {
-      e.preventDefault()
-      count++
-      $(".isi").append(`
-        <tr id="row_${count}">
-          <td class="px-0">
-            <input data-field-name="kode" type="text" class="l form-control" value="" name="kode[]" id="kode_${count}" autocomplete="off">
-          </td>
-          <td class="px-0">
-            <input data-field-name="obat" type="text" class="l form-control autoBeliobat" value="" name="obat[]" id="obat_${count}" autocomplete="off">
-          </td>
-          <td>
-          <input type="text" class="l form-control" value="" name="jenis[]" id="jenis_${count}">
-          </td>
-          <td>
-            <input type="number" class="l form-control" value="" name="qty[]" id="qty_${count}">
-          </td>
-          <td>
-            <input type="text" class="l form-control" value="" name="hargabeli[]" id="harga_beli_${count}">
-          </td>
-          <td class="px-0 d-flex align-items-center">
-            <input type="text" class="l form-control total" value="" name="hargajual[]" id="harga_jual_${count}">
-            <div id="delete_${count}" class="btn btn-danger delete_row"><i class="fas fa-trash-alt"></i></div>
-          </td>
-        </tr>
+// $(document).ready(function() {
+//   let count = 1
+//     $("#addFieldl").click(function (e) {
+//       e.preventDefault()
+//       count++
+//       $(".isi").append(`
+//         <tr id="row_${count}">
+//           <td class="px-0">
+//             <input data-field-name="kode" type="text" class="l form-control" value="" name="kode[]" id="kode_${count}" autocomplete="off">
+//           </td>
+//           <td class="px-0">
+//             <input data-field-name="obat" type="text" class="l form-control autoBeliobat" value="" name="obat[]" id="obat_${count}" autocomplete="off">
+//           </td>
+//           <td>
+//           <input type="text" class="l form-control" value="" name="jenis[]" id="jenis_${count}">
+//           </td>
+//           <td>
+//             <input type="number" class="l form-control" value="" name="qty[]" id="qty_${count}">
+//           </td>
+//           <td>
+//             <input type="text" class="l form-control" value="" name="hargabeli[]" id="harga_beli_${count}">
+//           </td>
+//           <td class="px-0 d-flex align-items-center">
+//             <input type="text" class="l form-control total" value="" name="hargajual[]" id="harga_jual_${count}">
+//             <div id="delete_${count}" class="btn btn-danger delete_row"><i class="fas fa-trash-alt"></i></div>
+//           </td>
+//         </tr>
 
-      `)
-    });
-});
+//       `)
+//     });
+// });
 
 $(document).ready(function() {
   let kode = document.getElementsByClassName('isi');
@@ -224,25 +224,21 @@ $(document).ready(function() {
       count++
       $(".isi").append(`
       <tr id="row_${count}">
+            <input data-field-name="kode" type="hidden" class="l form-control col-md-12 autocomplete" value="" name="kode[]" id="kode_${count}" autocomplete="off">
+            
           <td class="px-0">
-            <input data-field-name="kode" type="text" class="l form-control col-md-12 autocomplete" value="" name="kode[]" id="kode_${count}" autocomplete="off">
-          </td>
-          <td class="px-0">
-            <input data-field-name="obat" type="text" class="l form-control col-md-12 autocomplete" value="" name="obat[]" id="obat_${count}" autocomplete="off">
+            <input data-field-name="item" type="text" class="l form-control col-md-12 autocomplete" value="" name="item[]" id="item_${count}" autocomplete="off">
           </td>
           <td>
-            <input onchange="total();" type="number" class="l form-control qty" value="" name="qty[]" id="qty_${count}">
+            <input onchange="total();" type="text" inputmode="numeric" class="l form-control qty" value="" name="qty[]" id="qty_${count}">
           </td>
           <td>
             <input type="text" class="l form-control" value="" name="harga[]" id="harga_${count}" readonly>
           </td>
-          <input type="hidden" class="l form-control" value="" name="fee[]" id="fee_${count}" readonly>
-          <input type="hidden" class="l form-control" value="" name="induk[]" id="induk_${count}" readonly>
           <td>
             <input type="text" class="l form-control total" value="" name="total_harga[]" id="total_harga_${count}" readonly>
-            </td>
-            <td class="d-flex align-items-center">
-            <input type="hidden" class="l form-control total" value="" name="ket[]" id="ket_${count}" readonly>
+          </td>
+          <td class="d-flex align-items-center">
             <div id="delete_${count}" class="btn btn-danger delete_row"><i class="fas fa-trash-alt"></i></div>
           </td>
         </tr>
