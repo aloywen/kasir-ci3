@@ -113,7 +113,7 @@ $this->load->view('dist/_partials/header');
                           </tr>
                           <tr>
                             <td class=""><h3>BAYAR</h3></td>
-                            <td class="text-right"><input style="width:220px" type="number" name="bayar" value="<?= $transaksi['bayar']?>" id="bayar" class="form-control text-right g kembali"></td>
+                            <td class="text-right"><input style="width:220px" type="text" name="bayar" value="<?= $transaksi['bayar']?>" id="bayar" class="form-control text-right g kembali"></td>
 
                             <td ><h3>UANG KEMBALI</h3></td>
                             <td class="text-right"><input type="number" name="uang_kembali" value="<?= $transaksi['kembali']?>" id="uang_kembali" class="form-control text-right g" readonly></td>
@@ -133,3 +133,5 @@ $this->load->view('dist/_partials/header');
         </section>
       </div>
 <?php $this->load->view('dist/_partials/footer'); ?>
+
+

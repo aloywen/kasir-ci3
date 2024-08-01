@@ -89,10 +89,10 @@ $this->load->view('dist/_partials/header');
                             <input onchange="total();" type="number" class="l form-control qty" value="" name="qty[]" id="qty_1">
                           </td>
                           <td>
-                            <input type="text" class="l form-control" value="" name="harga[]" id="harga_1" disabled>
+                            <input type="text" class="l form-control" value="" name="harga[]" id="harga_satuan_1" readonly>
                           </td>
                           <td>
-                            <input type="text" class="l form-control total" value="" name="total_harga[]" id="total_harga_1" readonly>
+                            <input type="text" class="l form-control total" value="" name="totalharga[]" id="total_harga_1" readonly>
                           </td>
                           <td class="d-flex align-items-center">
                             <div id="delete_1" class="btn btn-danger delete_row"><i class="fas fa-trash-alt"></i></div>
@@ -106,15 +106,15 @@ $this->load->view('dist/_partials/header');
                           <td colspan="1"><button id="addField" class="btn btn-warning py-2">TAMBAH ITEM</button></td>
                         </tr>
                         <tr>
-                          <td colspan="2"><h3>TOTAL</h3></td>
+                          <td colspan="2"><h3>TOTAL :</h3></td>
                           <td colspan="3" class="text-right"><input type="text" name="grand_total" id="grand_total" class="form-control text-right g" readonly></td>
                         </tr>
                         <tr>
-                          <td class=""><h3>BAYAR</h3></td>
-                          <td class="text-right"><input style="width:220px" type="number" name="bayar" id="bayar" class="form-control text-right g kembali"></td>
+                          <td class=""><h3>BAYAR :</h3></td>
+                          <td class="text-right"><input style="width:220px" type="text" name="bayar" id="bayar" class="form-control text-right g kembali"></td>
 
-                          <td ><h3>UANG KEMBALI</h3></td>
-                          <td class="text-right"><input type="number" name="uang_kembali" id="uang_kembali" class="form-control text-right g" readonly></td>
+                          <td ><h3>UANG KEMBALI :</h3></td>
+                          <td class="text-right"><input type="text" name="uang_kembali" id="uang_kembali" class="form-control text-right g" readonly></td>
                         
                         </tr>
                       </tfoot>

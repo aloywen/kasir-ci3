@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SLIP SETORAN HARIAN</title>
+    <title>LAPORAN OMZET</title>
 
     <style>
         hr.g{
@@ -58,9 +58,8 @@ function terbilang($nilai) {
 
 ?>
 
-    <h4 class="mt-4" style="letter-spacing:6.5px">KLINIK DHARMA BHAKTI</h5>
-    <h5>Jl. Raya Sumber Jaya No.18 Tambun - Bekasi</h5>
-    <h5 style="margin-left:100px">SLIP SETORAN HARIAN</h5>
+    <h4 class="mt-4" style="letter-spacing:6.5px">KANTIN RS</h5>
+    <h5 style="margin-left:100px">LAPORAN OMZET</h5>
     <hr class="g" style="width:410px;text-align:left;margin-left:0;">
     <hr class="g" style="width:410px;text-align:left;margin-left:0;margin-top:-12px">
 
@@ -68,7 +67,7 @@ function terbilang($nilai) {
     <div class="row">
         <div class="col-md-3"><h5>Kasir</h5></div>
         <div class="col-md-1.5"><h5>:</h5></div>
-        <div style="width:175px"><h5 class="ml-2">BD. <?= $transaksi['kasir'] ?></h5></div>
+        <div style="width:175px"><h5 class="ml-2"><?= $transaksi['admin'] ?></h5></div>
     </div>
     <div class="row">
         <div class="col-md-3"><h5>Tanggal</h5></div>
@@ -78,30 +77,11 @@ function terbilang($nilai) {
     ?></h5></div>
     </div>
     <br>
-    <div class="row">
-        <div class="col-md-3"><h5>Omzet MCU</h5></div>
-        <div class="col-md-1.5"><h5>:</h5></div>
-        <div style="width:105px"><h5 class="text-right"><?= number_format($transaksi['mcu'],0,',','.'); ?></h5></div>
-    </div>
-    <div class="row">
-        <div class="col-md-3"><h5>Omzet Pasien Umum</h5></div>
-        <div class="col-md-1.5"><h5>:</h5></div>
-        <div style="width:105px"><h5 class="text-right"><?= number_format($transaksi['total'],0,',','.'); ?></h5></div>
-    </div>
-    <div class="row">
-        <div class="col-md-3"><h5>Omzet Jaminan/Ins</h5></div>
-        <div class="col-md-1.5"><h5>:</h5></div>
-        <div style="width:105px"><h5 class="text-right"><?= number_format(0,0,',','.'); ?></h5></div>
-    </div>
-    <div class="row my-2">
-        <div class="col-md-3"></div>
-        <div class="col-md-1.5 mt-3"></div>
-        <div class=" mt-3"><hr style="width:120px;text-align:left;margin-left:0;margin-top:-12px"></div>
-    </div>
+    
     <div class="row">
         <div class="col-md-3"><h5>Total Omzet</h5></div>
         <div class="col-md-1.5"><h5>:</h5></div>
-        <div style="width:105px"><h5 class="text-right"><?= number_format($transaksi['total'],0,',','.'); ?></h5></div>
+        <div style="width:105px"><h5 class="text-right"><?= number_format($grand_total['grand_total'],0,',','.'); ?></h5></div>
     </div>
 
     <br>
@@ -129,31 +109,6 @@ function terbilang($nilai) {
     
     <br>
     
-    <div class="row">
-        <div class="col-md-3 d-flex justify-content-between"><h5>Omzet Tunai</h5> <h5 class="text-right">Rp</h5></div>
-        <div class="col-md-1.5"><h5>:</h5></div>
-        <div style="width:105px"><h5 class="text-right"><?= number_format($transaksi['total'],0,',','.'); ?></h5></div>
-    </div>
-    <div class="row">
-        <div class="col-md-3 d-flex justify-content-between"><h5>Omzet SmArt</h5> <h5 class="text-right">Rp</h5></div>
-        <div class="col-md-1.5"><h5>:</h5></div>
-        <div style="width:105px"><h5 class="text-right"><?= number_format(0,0,',','.'); ?></h5></div>
-    </div>
-    <div class="row">
-        <div class="col-md-3 d-flex justify-content-between"><h5>Ekses Claim</h5> <h5 class="text-right">Rp</h5></div>
-        <div class="col-md-1.5"><h5>:</h5></div>
-        <div style="width:105px"><h5 class="text-right"><?= number_format(0,0,',','.'); ?></h5></div>
-    </div>
-    <div class="row">
-        <div class="col-md-3 d-flex justify-content-between"><h5>DP RWI</h5> <h5 class="text-right">Rp</h5></div>
-        <div class="col-md-1.5"><h5>:</h5></div>
-        <div style="width:105px"><h5 class="text-right"><?= number_format(0,0,',','.'); ?></h5></div>
-    </div>
-    <div class="row">
-        <div class="col-md-3 d-flex justify-content-between"><h5>Saldo Awal Kas</h5> <h5 class="text-right">Rp</h5></div>
-        <div class="col-md-1.5"><h5>:</h5></div>
-        <div style="width:105px"><h5 class="text-right"><?= number_format(0,0,',','.'); ?></h5></div>
-    </div>
 
     <hr class="g" style="width:150px;text-align:left;margin-left:200px;">
     <hr class="g" style="width:150px;text-align:left;margin-left:200px;margin-top:-12px">
@@ -169,7 +124,7 @@ function terbilang($nilai) {
 
     
     <script>
-        my()
+        // my()
 
         function my() {
             window.print();
@@ -180,7 +135,7 @@ function terbilang($nilai) {
         }
 
         function closePrintView() {
-            window.location.href =  'http://localhost/klinik/masterdata/lapomzet'
+            window.location.href =  'http://localhost/kasir/masterdata/lapomzet'
         }
     </script>
     </body>

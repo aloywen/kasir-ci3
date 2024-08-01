@@ -8,7 +8,6 @@ class Lapomzet extends CI_Controller {
         parent::__construct();
         is_logged_in();
     }
-    
     public function index() {
 		$data = array(
 			'title' => "Laporan Omzet",
@@ -130,7 +129,7 @@ class Lapomzet extends CI_Controller {
         $d = date('Y-m-d 00:00:00', strtotime($tgl_dari));
         $s = date('Y-m-d 24:00:00', strtotime($tgl_sampai));
 
-        $this->db->select_sum('grand_total');
+        $this->db->select('admin, SUM(grand_total) as grand_total');
         $this->db->where('tgl >=', $d);
         $this->db->where('tgl <=', $s);
         $query = $this->db->get('transaksi_penjualan')->row_array();
@@ -142,11 +141,18 @@ class Lapomzet extends CI_Controller {
 
     public function print()
     {
-        $dat = $this->session->flashdata('item');
+        $tgl_dari = $this->input->post('tgl_dari');
+        $tgl_sampai = $this->input->post('tgl_sampai');
 
-        // var_dump($dat['tgl']);
+        $d = date('Y-m-d 00:00:00', strtotime($tgl_dari));
+        $s = date('Y-m-d 24:00:00', strtotime($tgl_sampai));
 
-        $data['transaksi'] = $this->db->get_where('omzet', ['tgl' => $dat['tgl']])->row_array();
+        $data['transaksi'] = $this->db->get_where('transaksi_penjualan', ['tgl >=' => $d, 'tgl <=' => $s])->row_array();
+
+        $this->db->select_sum('grand_total');
+        $this->db->where('tgl >=', $d);
+        $this->db->where('tgl <=', $s);
+        $data['grand_total'] = $this->db->get('transaksi_penjualan')->row_array();
 
 
         $this->load->view('masterdata/lapomzet/print', $data);

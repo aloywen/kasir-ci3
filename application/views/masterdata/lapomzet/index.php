@@ -27,7 +27,7 @@ $this->load->view('dist/_partials/header');
 
           <div class="section-body">
 
-              <form action="<?= base_url('masterdata/lapomzet/store'); ?>" method="post">
+              <form action="<?= base_url('masterdata/lapomzet/print'); ?>" method="post">
 
                 <div class="form-row d-flex r">
                     <div class="form-group d-flex align-items-center col-md-6 row">
@@ -54,7 +54,7 @@ $this->load->view('dist/_partials/header');
                   </div>
                 </div>
 
-                <button onclick="return confirm('SUDAH TAKIN DIPOSTING? APAKAH NOMINAL SUDAH SESUAI?')" type="submit" class="btn btn-primary px-4 py-3" style="font-size: 20px">Posting</button>
+                <button type="submit" class="btn btn-primary px-4 py-3" style="font-size: 20px">Print</button>
  
               </form>
 

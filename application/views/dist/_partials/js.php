@@ -161,13 +161,13 @@ $(document).ready(function() {
             <input data-field-name="item" type="text" class="l form-control col-md-12 autocomplete" value="" name="item[]" id="item_${count}" autocomplete="off">
           </td>
           <td>
-            <input onchange="total();" type="text" inputmode="numeric" class="l form-control qty" value="" name="qty[]" id="qty_${count}">
+            <input onchange="total();" type="number" class="l form-control qty" value="" name="qty[]" id="qty_${count}">
           </td>
           <td>
-            <input type="text" class="l form-control" value="" name="harga[]" id="harga_${count}" readonly>
+          <input type="text" class="l form-control" value="" name="harga[]" id="harga_satuan_${count}" readonly>
           </td>
           <td>
-            <input type="text" class="l form-control total" value="" name="total_harga[]" id="total_harga_${count}" readonly>
+            <input type="text" class="l form-control total" value="" name="totalharga[]" id="total_harga_${count}" readonly>
           </td>
           <td class="d-flex align-items-center">
             <div id="delete_${count}" class="btn btn-danger delete_row"><i class="fas fa-trash-alt"></i></div>
@@ -270,7 +270,7 @@ $(document).ready(function() {
       var rowNo;
       rowNo = getID(current)
       var qty = $('#qty_'+rowNo).val()
-      var harga = $('#harga_'+rowNo).val()
+      var harga = $('#harga_satuan_'+rowNo).val()
 
       var totalHar = qty*harga
       $('#total_harga_'+rowNo).val(totalHar)
@@ -286,14 +286,15 @@ $(document).ready(function() {
     function handleKembali() {
       let total = $('#grand_total').val()
       let temp = total.replace(/\./g,'')
-
+      
       let bayar = $('#bayar').val()
+      let tempBayar = bayar.replace(/\./g,'')
 
-      // console.log('ini total:',total)
+      // console.log('ini total:',bayar)
       // console.log('ini temp:',temp)
       
 
-      let kembalian = bayar - temp
+      let kembalian = tempBayar - temp
       $('#uang_kembali').val(kembalian.toLocaleString("id-ID"))
     }
     
@@ -360,12 +361,12 @@ $(document).ready(function() {
             $('#qty_'+rowNo).val(1)
 
             let peruntukan = document.getElementById('peruntukan').value
-            console.log('untuk apa : ',peruntukan)
+            // console.log('untuk apa : ',peruntukan)
             
             if(peruntukan === 'karyawan'){
-              $('#harga_'+rowNo).val(data.harga_karyawan)
+              $('#harga_satuan_'+rowNo).val(data.harga_karyawan)
             } else if (peruntukan === 'pengunjung') {
-              $('#harga_'+rowNo).val(data.harga_pengunjung)
+              $('#harga_satuan_'+rowNo).val(data.harga_pengunjung)
             } else {
               ''
             }
@@ -640,14 +641,16 @@ $(document).ready(function() {
                 'tgl_sampai': tgl_sampai
                },
               success:function(data){
-                var hasil = JSON.parse(data);  
-              //  console.log(hasil);
-               let total = parseInt(hasil.grand_total)
+                var temp = JSON.parse(data); 
+               console.log(temp);
+               let total = parseInt(temp.grand_total)
 
                let inputOmzet = document.getElementById('total_omzet')
+               let kasir = document.getElementById('kasir')
               
                 if(total){
                   inputOmzet.value=total.toLocaleString('id-ID')
+                  kasir.value=temp.admin
                 } else {
                   inputOmzet.value=0
                 }
@@ -829,6 +832,32 @@ $(document).ready(function() {
                    
     }
     
+  
+        // Fungsi untuk format angka ke format Rupiah
+        function formatRupiah(angka) {
+            let number_string = angka.replace(/[^,\d]/g, '').toString(),
+                split = number_string.split(','),
+                sisa = split[0].length % 3,
+                rupiah = split[0].substr(0, sisa),
+                ribuan = split[0].substr(sisa).match(/\d{3}/gi);
+            
+            // Jika ada ribuan, gabungkan dengan titik sebagai pemisah
+            if (ribuan) {
+                let separator = sisa ? '.' : '';
+                rupiah += separator + ribuan.join('.');
+            }
+
+            // Gabungkan dengan desimal jika ada
+            rupiah = split[1] !== undefined ? rupiah + ',' + split[1] : rupiah;
+            
+            return rupiah;
+        }
+
+        // Event listener untuk format input
+        document.getElementById('bayar').addEventListener('input', function (e) {
+            let input = e.target;
+            input.value = formatRupiah(input.value);
+        });
   </script>
 </body>
 </html>

@@ -40,7 +40,7 @@ $this->load->view('dist/_partials/header', $menu);
                           <tr>
                             <td><?= $r['no_nota']; ?></td>
                             <td><?= $r['tgl'];?></td>
-                            <td><?= $r['grand_total']; ?></td>
+                            <td>Rp. <?= number_format($r['grand_total'],0,',','.'); ?></td>
                             <td class="d-flex align-items-center">
                             <a class="nav-link" href="<?php echo base_url(); ?>kasir/penjualan/detail/<?= $e ?>"><button class="btn btn-warning px-3 py-1">Edit </button></a>
                             <a class="nav-link" href="<?php echo base_url(); ?>kasir/penjualan/printulang/<?= $e ?>"><button class="btn btn-primary px-2 py-1">Print </button></a>

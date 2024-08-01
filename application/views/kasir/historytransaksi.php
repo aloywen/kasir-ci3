@@ -40,7 +40,7 @@ $this->load->view('dist/_partials/header', $menu);
                             </td>
                             <td><?= $r['no_nota']; ?></td>
                             <td><?= $r["tgl"]; ?></td>
-                            <td><?= $r['grand_total']; ?></td>
+                            <td><?= number_format($r['grand_total'],0,',','.'); ?></td>
                           </tr>
                           <?php endforeach; ?>
                         </tbody>

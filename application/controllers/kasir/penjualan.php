@@ -41,9 +41,13 @@ class Penjualan extends CI_Controller {
 
 	public function store()
     {
-            $grand_total = $this->input->post('grand_total');
-            $fix = preg_replace("/[^0-9]/", "", $grand_total);
-            $kembali = preg_replace("/[^0-9]/", "", $grand_total);
+            $tempgrand_total = $this->input->post('grand_total');
+            $tempbayar = $this->input->post('bayar');
+            $tempkembali = $this->input->post('uang_kembali');
+
+            $grand_total = preg_replace("/[^0-9]/", "", $tempgrand_total);
+            $bayar = preg_replace("/[^0-9]/", "", $tempbayar);
+            $kembali = preg_replace("/[^0-9]/", "", $tempkembali);
             date_default_timezone_set('Asia/Jakarta');
             $tgl = date('Y-m-d G:i:s');
 
@@ -53,34 +57,38 @@ class Penjualan extends CI_Controller {
             $e = [
                     'no_nota' => htmlspecialchars($this->input->post('no_nota', true)),
                     'admin' => $this->session->userdata('user'),
-                    'grand_total' => $fix,
+                    'grand_total' => htmlspecialchars($grand_total, true),
                     'label' => htmlspecialchars($this->input->post('peruntukan', true)),
-                    'bayar' => htmlspecialchars($this->input->post('bayar', true)),
-                    'kembali' => $kembali,
+                    'bayar' => htmlspecialchars($bayar, true),
+                    'kembali' => htmlspecialchars($kembali, true),
  
             ];
             
+            // var_dump($e);
             // INSERT TRANSAKSI PENJUALAN
             $this->db->insert('transaksi_penjualan', $e);
 
 
-            $i = 0;
+            
+            $kode = $this->input->post('kode');
+            $qty = $this->input->post('qty');
+            $harga = $this->input->post('harga');
+            $total = $this->input->post('totalharga');
 
-            $a = $this->input->post('kode');
-            $b = $this->input->post('nama_item');
-            $c = $this->input->post('qty');
-            $d = $this->input->post('total_harga');
-            $keterangan = $this->input->post('ket');
-
+            // var_dump($harga);
+            
             date_default_timezone_set('Asia/Jakarta');
+            $i = 0;
             
             // INSERT ITEM PENJUALAN
-            foreach($a as $row){
+            foreach($kode as $row){
                 $dat = array(
                         'kode_item'=> $row,
                         'no_nota' => $this->input->post('no_nota'),
-                        'qty'=> $c[$i],
-                        'total_harga'=> $d[$i],
+                        'qty'=> $qty[$i],
+                        'harga'=> $harga[$i],
+                        'total_harga'=> $total[$i],
+                        'tgl' => date('Y-m-d')
                 ); 
                 $i++;
                 // var_dump($dat);
@@ -181,21 +189,15 @@ class Penjualan extends CI_Controller {
 
         $data['besok'] = $datet->format('d-m-Y');
 
-        $jamdari = date('y-m-d 00-00-00');
-        $jamsampai = date('y-m-d 24-00-00');
+        date_default_timezone_set('Asia/Jakarta');
+
+        $jamdari = date('Y-m-d 00-00-00');
+        $jamsampai = date('Y-m-d 24-00-00');
 
         // $data['transaksi'] = $this->db->get_where('transaksi_penjualan', ['tgl' => date() ]);
         $data['transaksi'] = $this->db->get_where('transaksi_penjualan', ['tgl >=' => $jamdari , 'tgl <=' => $jamsampai])->result_array();
         
         // var_dump($dat);
-
-		// $this->db->select('*');
-        // $this->db->from('transaksi_pasien');
-        // $this->db->join('obat_pasien', 'obat_pasien.no_kwitansi = transaksi_pasien.no_kwitansi');
-        // $this->db->where('transaksi_pasien.posting', 'belum');
-        // $cariO = $this->db->get()->result_array();
-
-        // var_dump($cariO);
 
 		$this->load->view('kasir/transaksiperhari', $data);
     
@@ -290,13 +292,11 @@ class Penjualan extends CI_Controller {
     {
         $tambahgaring = substr_replace($no, '/', 4, 0);
 
-
-        $no_kwitansi = $this->input->post('no_kwitansi');
         $kode = $this->input->post('kode');
         $item = $this->input->post('nama');
         $qty = $this->input->post('qty');
         $harga = $this->input->post('harga');
-        $total_harga = $this->input->post('total_harga');
+        $total_harga = $this->input->post('totalharga');
         $temp_grand_total = $this->input->post('grand_total');
         $bayar = $this->input->post('bayar');
         $kembali = $this->input->post('kembali');
@@ -323,18 +323,18 @@ class Penjualan extends CI_Controller {
             $i++;
             // var_dump($dat);
             
-            $this->db->insert("obat_pasien",$dat);
+            $this->db->insert("item_penjualan",$dat);
         }
 
-        $this->db->set(['medical_record' => $this->input->post('kode_pasien'), 'status' => $status, 'jns_pasien' => $jns_pasien, 'penanggung' => $penanggung, 'perusahaan' => $perusahaan, 'asuransi' => $asuransi, 'dokter' => $dokter, 'bidan' => $bidan, 'diagnosa' => $diagnosa, 'icd' => $icd, 'grand_total' => $fix]);
-        $this->db->where('no_kwitansi', $no_kwitansi);
-        $this->db->update('transaksi_pasien');
+        $this->db->set(['label' => htmlspecialchars($this->input->post('peruntukan', true)), 'bayar' => htmlspecialchars($bayar, true), 'kembali' => htmlspecialchars($kembali, true),'grand_total' => $grand_total]);
+        $this->db->where('no_nota', $tambahgaring);
+        $this->db->update('transaksi_penjualan');
 
         $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Transaksi Berhasil Diupdate!</div>');
-        redirect('kasir/pasien/riwayatpasien');
+        redirect('kasir/penjualan/transaksiperhari');
     }
 
-    public function deleteTransaksi($no_kwitansi)
+    public function deleteTransaksi($no_nota)
     {
         // $fix = preg_replace("/[^0-9]/", "", $no_kwitansi);
 
