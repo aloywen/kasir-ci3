@@ -78,7 +78,7 @@ $this->load->view('dist/_partials/header');
                         <?php $i = 0 ?>
                         <?php foreach ($item as $it ) : ?>
                           <?php $i++ ?>
-
+ 
                         <tr id="row_<?= $i ?>">
                           <!-- <td class="px-0"> -->
                             <input data-field-name="kode" type="hidden" class="l form-control col-md-12 autocomplete" value="<?= $it['kode_item'] ?>" name="kode[]" id="kode_<?= $i ?>" autocomplete="off">
@@ -87,17 +87,17 @@ $this->load->view('dist/_partials/header');
                             <input data-field-name="item" type="text" class="l form-control col-md-12 autocomplete" value="<?= $it['nama']; ?>" name="item[]" id="item_<?= $i ?>" autocomplete="off">
                           </td>
                           <td>
-                            <input onchange="total();" type="number" class="l form-control qty" value="<?= $it['qty']; ?>" name="qty[]" id="qty_<?= $i ?>">
+                            <input type="number" class="l form-control qty" value="<?= $it['qty']; ?>" name="qty[]" id="qty_<?= $i ?>">
                           </td>
                           <td>
-                            <input type="text" class="l form-control" value="<?= $it['harga']; ?>" name="harga[]" id="harga_<?= $i ?>" disabled>
+                            <input type="text" class="l form-control" value="<?= $it['harga']; ?>" name="harga[]" id="harga_satuan_<?= $i ?>" readonly>
                           </td>
                           <td>
-                            <input type="text" class="l form-control total" value="<?= $it['total_harga']; ?>" name="total_harga[]" id="total_harga_<?= $i ?>" readonly>
+                            <input type="text" class="l form-control total" value="<?= $it['total_harga']; ?>" name="totalharga[]" id="total_harga_<?= $i ?>" readonly>
                             <input type="hidden" class="l form-control" value="<?= $it['tgl']; ?>" name="tgl[]" id="tgl_<?= $i ?>" readonly>
                           </td>
                           <td class="d-flex align-items-center">
-                            <div id="delete_1" class="btn btn-danger delete_row"><i class="fas fa-trash-alt"></i></div>
+                            <div id="delete_<?= $i ?>" class="btn btn-danger delete_row"><i class="fas fa-trash-alt"></i></div>
                           </td>
                         </tr>
                         <?php endforeach; ?>

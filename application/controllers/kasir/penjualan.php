@@ -299,8 +299,7 @@ class Penjualan extends CI_Controller {
         $total_harga = $this->input->post('totalharga');
         $temp_grand_total = $this->input->post('grand_total');
         $bayar = $this->input->post('bayar');
-        $kembali = $this->input->post('kembali');
-        $bayar = $this->input->post('bayar');
+        $temp_kembali = $this->input->post('uang_kembali');
 
 
         $this->db->where('no_nota', $tambahgaring);
@@ -308,16 +307,19 @@ class Penjualan extends CI_Controller {
 
         $totalHarga = preg_replace("/[^0-9]/", "", $total_harga);
         $grand_total = preg_replace("/[^0-9]/", "", $temp_grand_total);
+        $kembali = preg_replace("/[^0-9]/", "", $temp_kembali);
 
+        // var_dump($kembali);
+        // var_dump($temp_kembali);
         $i = 0; 
         // INSERT OBAT PASIEN
         foreach($kode as $row){
             $dat = array(
-                    'kode'=> $row,
+                    'kode_item'=> $row,
                     'no_nota' => $tambahgaring,
                     'qty'=> $qty[$i],
                     'harga'=> $harga[$i],
-                    'total_harga'=> $totalHargaa[$i],
+                    'total_harga'=> $totalHarga[$i],
                     'tgl' => date('Y-m-d')
             ); 
             $i++;
@@ -337,18 +339,17 @@ class Penjualan extends CI_Controller {
     public function deleteTransaksi($no_nota)
     {
         // $fix = preg_replace("/[^0-9]/", "", $no_kwitansi);
+        $tambahgaring = substr_replace($no_nota, '/', 4, 0);
 
-        $tambahgaring1 = substr_replace($no_kwitansi, '/', 2, 0);
-        $fix_kwitansi = substr_replace($tambahgaring1, '/', 5, 0);
         // var_dump($contoh2);
-        $this->db->where('no_kwitansi', $fix_kwitansi);
-        $this->db->delete('obat_pasien');
+        $this->db->where('no_nota', $tambahgaring);
+        $this->db->delete('item_penjualan');
 
-        $this->db->where('no_kwitansi', $fix_kwitansi);
-        $this->db->delete('transaksi_pasien');
+        $this->db->where('no_nota', $tambahgaring);
+        $this->db->delete('transaksi_penjualan');
 
         $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Data Berhasil Dihapus!</div>');
-        redirect('kasir/pasien/riwayatpasien');
+        redirect('kasir/penjualan/transaksiperhari');
     }
 
     public function ksjask() {

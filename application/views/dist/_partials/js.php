@@ -230,13 +230,13 @@ $(document).ready(function() {
             <input data-field-name="item" type="text" class="l form-control col-md-12 autocomplete" value="" name="item[]" id="item_${count}" autocomplete="off">
           </td>
           <td>
-            <input onchange="total();" type="text" inputmode="numeric" class="l form-control qty" value="" name="qty[]" id="qty_${count}">
+            <input type="number" class="l form-control qty" value="" name="qty[]" id="qty_${count}">
           </td>
           <td>
-            <input type="text" class="l form-control" value="" name="harga[]" id="harga_${count}" readonly>
+            <input type="text" class="l form-control" value="" name="harga[]" id="harga_satuan_${count}" readonly>
           </td>
           <td>
-            <input type="text" class="l form-control total" value="" name="total_harga[]" id="total_harga_${count}" readonly>
+            <input type="text" class="l form-control total" value="" name="totalharga[]" id="total_harga_${count}" readonly>
           </td>
           <td class="d-flex align-items-center">
             <div id="delete_${count}" class="btn btn-danger delete_row"><i class="fas fa-trash-alt"></i></div>
@@ -275,10 +275,11 @@ $(document).ready(function() {
       var totalHar = qty*harga
       $('#total_harga_'+rowNo).val(totalHar)
       
+      // console.log(harga)
       // var t = $('#t').val([harga])
       // var har = [harga]
       
-      handleKembali()
+      
       getTotal()
 
     }
@@ -593,13 +594,19 @@ $(document).ready(function() {
     function getTotal() {
       let arr = document.querySelectorAll('.total')
       let total = 0
-      for(var i = 0; i < arr.length; i++){
+      if(arr.length > 0){
+        for(var i = 0; i < arr.length; i++){
         if(parseInt(arr[i].value)){
           total +=parseInt(arr[i].value)
         }
 
         document.getElementById('grand_total').value =total.toLocaleString("id-ID")
+      }} else if(arr.length < 1) {
+        document.getElementById('grand_total').value = 0
+
       }
+
+      handleKembali()
     }
 
 
@@ -608,8 +615,11 @@ $(document).ready(function() {
       var currentEle, rowNo;
       currentEle = $(this);
       rowNo = getID(currentEle)
-      console.log('row', rowNo)
+      // console.log('row', rowNo)
       $("#row_"+rowNo).remove()
+
+      let arr = document.querySelectorAll('.total')
+
 
       getTotal()
     }
