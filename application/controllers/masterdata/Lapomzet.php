@@ -147,7 +147,9 @@ class Lapomzet extends CI_Controller {
         $d = date('Y-m-d 00:00:00', strtotime($tgl_dari));
         $s = date('Y-m-d 24:00:00', strtotime($tgl_sampai));
 
-        $data['transaksi'] = $this->db->get_where('transaksi_penjualan', ['tgl >=' => $d, 'tgl <=' => $s])->row_array();
+        $data['tgl'] = $tgl_dari;
+
+        $data['transaksi'] = $this->db->get_where('transaksi_penjualan', ['tgl >=' => $d, 'tgl <=' => $s])->result_array();
 
         $this->db->select_sum('grand_total');
         $this->db->where('tgl >=', $d);

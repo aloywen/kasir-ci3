@@ -57,17 +57,15 @@ function terbilang($nilai) {
 }
 
 ?>
-<div class="row">
-    <div class="col-md-8 d-flex flex-column align-items-center">
       
 
-        <div class="text-center">
+        <div class="">
 
             <?php date_default_timezone_set('Asia/Jakarta'); ?>
             <h6 class="mt-4">KANTIN RS</h5>
             <h4 style="letter-spacing:5.5px;margin-top:-9px">Laporan Stok Barang</h4>
             <h5 style="margin-top:-8px"><?= date('d-m-Y G:i:s');?></h5>
-            <hr class="g" style="width:700px;text-align:left;margin-left:0;">
+            <hr class="g" style="width:410px;text-align:left;margin-left:0;">
             <!-- <hr class="g" style="width:700px;text-align:left;margin-left:0;margin-top:-12px"> -->
         </div>
      
@@ -76,8 +74,8 @@ function terbilang($nilai) {
             <thead>
                 <tr>
                     <td style="width:50px">No</td>
-                    <td style="width:140px">Kode</td>
-                    <td style="width:350px">Nama Barang</td>
+                    <td style="width:50px">Kode</td>
+                    <td style="width:150px">Nama Barang</td>
                     <td style="width:100px">Terjual</td>
                     <td style="width:100px">Stok</td>
                 </tr>
@@ -86,14 +84,14 @@ function terbilang($nilai) {
         <!-- <hr class="g" style="width:700px;text-align:left;margin-left:0;margin-top:-12px"> -->
         
         <table style="margin-top:-17px; margin-left:10px">
-            <hr class="g" style="width:700px; margin-top:3px">
+        <hr class="g" style="width:410px;text-align:left;margin-left:0;margin-top:8px;padding-bottom:5px">
             <tbody>
                 <?php $i = 1 ?>
                 <?php foreach ($item as $o) : ?>
                 <tr>
                     <td style="width:50px"><?= $i ?></td>
-                    <td style="width:140px"><?= $o['kode_item'] ?></td>
-                    <td style="width:350px"><?= $o['nama'] ?></td>
+                    <td style="width:50px"><?= $o['kode_item'] ?></td>
+                    <td style="width:150px"><?= $o['nama'] ?></td>
                     <td style="width:100px"><?= $o['totalJual'] ?></td>
                     <td style="width:100px"><?= $o['stok'] ?></td>
                     <?php $i++ ?>
@@ -102,13 +100,11 @@ function terbilang($nilai) {
             </tbody>
         </table>
   
-    </div>
-</div>
 
 
     
     <script>
-        // my()
+        my()
 
         function my() {
             window.print();
@@ -119,7 +115,7 @@ function terbilang($nilai) {
         }
 
         function closePrintView() {
-            window.location.href =  'http://localhost/klinik/masterdata/lapstokobat'
+            window.location.href =  'http://localhost/kasir/masterdata/lapstokitem'
         }
     </script>
     </body>

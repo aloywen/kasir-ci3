@@ -65,66 +65,65 @@ function terbilang($nilai) {
 
 
     <div class="row">
-        <div class="col-md-3"><h5>Kasir</h5></div>
-        <div class="col-md-1.5"><h5>:</h5></div>
-        <div style="width:175px"><h5 class="ml-2"><?= $transaksi['admin'] ?></h5></div>
-    </div>
-    <div class="row">
-        <div class="col-md-3"><h5>Tanggal</h5></div>
+        <div class="col-md-2"><h5>Tanggal</h5></div>
         <div class="col-md-1.5"><h5>:</h5></div>
         <div style="width:155px"><h5 class="text-left ml-2"><?php date_default_timezone_set('Asia/Jakarta'); 
-    echo date('d-m-Y', strtotime($transaksi["tgl"]));
+    echo date('d-m-Y', strtotime($tgl));
     ?></h5></div>
     </div>
     <br>
-    
-    <div class="row">
-        <div class="col-md-3"><h5>Total Omzet</h5></div>
-        <div class="col-md-1.5"><h5>:</h5></div>
-        <div style="width:105px"><h5 class="text-right"><?= number_format($grand_total['grand_total'],0,',','.'); ?></h5></div>
-    </div>
 
     <br>
 
-    <div class="row">
-        <div class="col-md-3"><h5>Omzet Kredit</h5></div>
-        <div class="col-md-1.5"><h5>:</h5></div>
-        <div style="width:105px"><h5 class="text-right"><?= number_format(0,0,',','.'); ?></h5></div>
-    </div>
-    <div class="row">
-        <div class="col-md-3"><h5>Omzet Credit Card</h5></div>
-        <div class="col-md-1.5"><h5>:</h5></div>
-        <div style="width:105px"><h5 class="text-right"><?= number_format(0,0,',','.'); ?></h5></div>
-    </div>
-    <div class="row">
-        <div class="col-md-3"><h5>Omzet Debet Card</h5></div>
-        <div class="col-md-1.5"><h5>:</h5></div>
-        <div style="width:105px"><h5 class="text-right"><?= number_format(0,0,',','.'); ?></h5></div>
-    </div>
-    <div class="row">
-        <div class="col-md-3"><h5>Omzet Smart Debet Card</h5></div>
-        <div class="col-md-1.5"><h5>:</h5></div>
-        <div style="width:105px"><h5 class="text-right"><?= number_format(0,0,',','.'); ?></h5></div>
-    </div>
     
-    <br>
-    
-
-    <hr class="g" style="width:150px;text-align:left;margin-left:200px;">
-    <hr class="g" style="width:150px;text-align:left;margin-left:200px;margin-top:-12px">
-
-    <div class="row">
-        <div class="col-md-3 d-flex justify-content-between"><h5>Uang Dalam Kas</h5> <h5 class="text-right">Rp</h5></div>
-        <div class="col-md-1.5"><h5>:</h5></div>
-        <div style="width:105px"><h5 class="text-right"><?= number_format($transaksi['total']+$transaksi['mcu'],0,',','.'); ?></h5></div>
-    </div>
-    
-
+    <table style="margin-top:-15px; margin-left:10px">
+            <thead>
+                <tr>
+                    <td style="width:50px">No</td>
+                    <td style="width:150px">No. Nota</td>
+                    <!-- <td style="width:250px">Tanggal</td> -->
+                    <td style="width:100px">Kasir</td>
+                    <td style="width:100px" class="text-center">Nominal</td>
+                </tr>
+            </thead>
+        </table>
+        <hr class="g" style="width:410px;text-align:left;margin-left:0; margin-top:3px">
+        <hr class="g" style="width:410px;text-align:left;margin-left:0;margin-top:-12px">
+        
+        <table style="margin-top:-17px; margin-left:10px">
+            <tbody style="padding-top:3px"> 
+                <?php $i = 1 ?>
+                <?php foreach ($transaksi as $t) : ?>
+                <tr>
+                    <td style="width:50px"><?= $i ?></td>
+                    <td style="width:150px""><h6><?= $t['no_nota'] ?></h6></td>
+                    <!-- <td style="width:250px"><?= $t['tgl'] ?></td> -->
+                    <td style="width:100px"><?= $t['admin'] ?></td>
+                    <td style="width:100px; margin-right:15px !important" class="text-right mr-1"><?= number_format($t['grand_total'],0,',','.'); ?></td>
+                </tr>
+                <?php $i++ ?>
+                <?php endforeach; ?>
+                
+            </tbody>
+            <tfoot>
+                <!-- <hr class="g" style="width:100%;text-align:left;margin-left:0;margin-top:-12px"> -->
+                <tr style="margin-top:10px !important">
+                    <td style="margin-top:10px !important" colspan="3" >GRAND TOTAL</td>
+                    <td class="text-center" colspan="2">Rp. <?= number_format($grand_total['grand_total'],0,',','.'); ?></td>
+                    <!-- <td colspan="2" class="text-right"><?= number_format($grand_total['grand_total'],0,',','.'); ?></td> -->
+                    <!-- <hr class="g"> -->
+                </tr>
+            </tfoot>
+            <!-- <hr class="g"> -->
+        </table>
+        <hr class="g" style="width:410px;text-align:left;margin-left:0;margin-top:-26px">
+        <hr class="g" style="width:410px;text-align:left;margin-left:0;margin-top:30px">
+  
 
 
     
     <script>
-        // my()
+        my()
 
         function my() {
             window.print();
