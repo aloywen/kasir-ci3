@@ -24,7 +24,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
             <!-- MASTER DATA -->
             <li class="dropdown <?php echo $this->uri->segment(2) == 'daftaradmin' || $this->uri->segment(2) == 'daftaritem' || $this->uri->segment(2) == 'lapstokitem' || $this->uri->segment(2) == 'lapomzet' ? 'active' : ''; ?>">
-              <a href="#" class="nav-link has-dropdown"><i class="fas fa-th"></i> <span class="mt-2">Inventory</span></a>
+              <a href="#" class="nav-link has-dropdown"><i class="fas fa-th"></i> <span class="mt-2">Master Data</span></a>
               <ul class="dropdown-menu">
 
                 <li class="<?php echo $this->uri->segment(2) == 'daftaradmin' ? 'active' : ''; ?>"><a class="nav-link" href="<?php echo base_url(); ?>masterdata/daftaradmin"><span>Daftar Admin</span></a></li>
@@ -55,11 +55,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
             <!-- PEMBELIAN -->
             <li class="dropdown <?php echo $this->uri->segment(2) == 'pembelian' || $this->uri->segment(2) == 'riwayatpembelian' ? 'active' : ''; ?>">
-              <a href="#" class="nav-link has-dropdown"><i class="fas fa-money-bill"></i> <span class="mt-2">Pembelian</span></a>
+              <a href="#" class="nav-link has-dropdown"><i class="fas fa-money-bill"></i> <span class="mt-2">Item Masuk</span></a>
               <ul class="dropdown-menu">
 
-                <li class="<?php echo $this->uri->segment(3) == 'add' ? 'active' : ''; ?>"><a class="nav-link" href="<?php echo base_url(); ?>pembelian/pembelian/add"><span>Pembelian Item</span></a></li>
-                <li class="<?php echo $this->uri->segment(3) == 'riwayat' ? 'active' : ''; ?>"><a class="nav-link" href="<?php echo base_url(); ?>pembelian/pembelian/riwayat"><span>Riwayat Pembelian</span></a></li>
+                <li class="<?php echo $this->uri->segment(3) == 'add' ? 'active' : ''; ?>"><a class="nav-link" href="<?php echo base_url(); ?>pembelian/pembelian/add"><span>Item Masuk</span></a></li>
+                <li class="<?php echo $this->uri->segment(3) == 'history' ? 'active' : ''; ?>"><a class="nav-link" href="<?php echo base_url(); ?>pembelian/pembelian/history"><span>Riwayat Item Masuk</span></a></li>
                 <li class="<?php echo $this->uri->segment(3) == 'stokitem' ? 'active' : ''; ?>"><a class="nav-link" href="<?php echo base_url(); ?>pembelian/pembelian/stokitem"><span>Stok Item</span></a></li>
 
 

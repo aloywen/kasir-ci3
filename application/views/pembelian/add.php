@@ -43,7 +43,7 @@ $this->load->view('dist/_partials/header');
                   <div class="form-row">
                       <div class="form-group d-flex col-md-5 align-items-center">
                         <label for="nomor_transaksi">Nomor Transaksi:</label>
-                        <input type="text" class="form-control l col-md-5" id="nomor_transaksi" value="BEL<?= sprintf("%07s", $m_transaksi) ?>" name="nomor_transaksi" readonly>
+                        <input type="text" class="form-control l col-md-5" id="nomor_transaksi" value="MSK<?= sprintf("%07s", $m_transaksi) ?>" name="nomor_transaksi" readonly>
                       </div>
 
 
@@ -57,45 +57,30 @@ $this->load->view('dist/_partials/header');
                   </div>
 
 
-                  <div class="form-row mt-1 r">
-                      <div class="form-group d-flex align-items-center col-md-5 row">
-                        <label for="nama_supplier" class="col-md-6">Nama Supplier</label>
-                        <input data-field-name="supplier" type="text" name="nama_supplier" id="nama_supplier" class="form-control col-md-5 l">
-                      </div>
-                  </div>
-
-
 
                   <table class="table" style="width:100%">
                       <thead>
                         <tr>
-                          <th >Kode</th>
-                          <th >Nama Obat</th>
-                          <th >Jenis</th>
+                          <th >Nama Item</th>
                           <th >Qty</th>
-                          <th >Harga Beli</th> 
-                          <th >Harga Jual</th>
+                          <th >Harga Karyawan</th> 
+                          <th >Harga Pengunjung</th>
                         </tr>
                       </thead>
                       <tbody class="isi">
                         <tr id="row_1">
+                            <input data-field-name="kode" type="hidden" class="l form-control" value="" name="kode[]" id="kode_1" autocomplete="off">
                           <td class="px-0">
-                            <input data-field-name="kode" type="text" class="l form-control" value="" name="kode[]" id="kode_1" autocomplete="off">
+                            <input data-field-name="obat" type="text" class="l form-control autoItemmasuk" value="" name="obat[]" id="obat_1" autocomplete="off">
                           </td>
-                          <td class="px-0">
-                            <input data-field-name="obat" type="text" class="l form-control autoBeliobat" value="" name="obat[]" id="obat_1" autocomplete="off">
-                          </td>
-                          <td>
-                            <input type="text" class="l form-control" value="" name="jenis[]" id="jenis_1"> 
-                        </td>
                             <td>
                                 <input type="number" class="l form-control" value="" name="qty[]" id="qty_1">
                             </td>
                           <td>
-                            <input type="text" class="l form-control" value="" name="hargabeli[]" id="harga_beli_1">
+                            <input type="text" class="l form-control" value="" name="hargakaryawan[]" id="harga_karyawan_1">
                           </td>
                           <td class="px-0">
-                            <input type="text" class="l form-control total" value="" name="hargajual[]" id="harga_jual_1">
+                            <input type="text" class="l form-control total" value="" name="hargapengunjung[]" id="harga_pengunjung_1">
                           </td>
                         </tr>
 
@@ -103,12 +88,12 @@ $this->load->view('dist/_partials/header');
                       </tbody>
                       <tfoot>
                         <tr>
-                          <td colspan="2"><button id="addFieldl" class="btn btn-primary">tambah baris</button></td>
+                          <td colspan="2"><button id="addFieldl" class="btn btn-primary py-2 px-3 mt-1" style="font-size:15px">tambah baris</button></td>
                         </tr>
                               </tfoot>
                     </table>
 
-                    <button type="submit" class="btn btn-success">Simpan Data</button>
+                    <button type="submit" class="btn btn-warning py-3 px-4 mt-5" style="font-size:20px">Simpan Data</button>
                     </form>
                   </div>
             </div>

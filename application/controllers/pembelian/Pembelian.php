@@ -11,11 +11,11 @@ class Pembelian extends CI_Controller {
     
     public function index() {
 		$data = array(
-			'title' => "Pembelian Obat",
-			'menu' => "Pembelian Obat"
+			'title' => "Item Masuk",
+			'menu' => "Item Masuk"
 		);
 
-		$data['item'] = $this->db->get('transaksi_pembelian_obat')->result_array();
+		$data['item'] = $this->db->get('transaksi_item_masuk')->result_array();
 
 		$this->load->view('pembelian/index', $data);
 	}
@@ -23,11 +23,11 @@ class Pembelian extends CI_Controller {
 	public function add()
 	{
 		$data = array(
-			'title' => "Tambah Obat",
-			'menu' => "Tambah Obat"
+			'title' => "Tambah Item Masuk",
+			'menu' => "Tambah Item Masuk"
 		);
 
-        $query = $this->db->query("SELECT MAX(nomor_transaksi) as m_transaksi from transaksi_pembelian_obat");
+        $query = $this->db->query("SELECT MAX(nomor_transaksi) as m_transaksi from transaksi_item_masuk");
         $da = $query->row();
         $data['no_transaksi'] = $da->m_transaksi;
 
@@ -35,16 +35,14 @@ class Pembelian extends CI_Controller {
 		$this->load->view('pembelian/add', $data);
 	}
 
-    public function cariobat(){
+    public function cariitem(){
         $name=$_GET['name'];
         $fieldName=$_GET['fieldName'];
 
 
         $this->db->select('*'); 
-        $this->db->from('jasa');
-        // $this->db->join('obat_pembelian', 'obat_pembelian.kode_obat = jasa.kode');
+        $this->db->from('daftar_item');
         $this->db->like('nama', $name);
-        $this->db->where('ket', 'O'); 
         $query = $this->db->get()->result_array();
         echo json_encode($query);
     }
@@ -52,41 +50,38 @@ class Pembelian extends CI_Controller {
 	public function store()
     {
 
-            $kode = $this->input->post('kode');
-            $obat = $this->input->post('obat');
-            $j = $this->input->post('jenis');
-            // $jenis = strtoupper($j);
+            $kode = $this->input->post('kode_item');
             $qty = $this->input->post('qty');
-            $harga_beli = $this->input->post('hargabeli');
-            $harga_jual = $this->input->post('hargajual');
-            $fix = preg_replace("/[^0-9]/", "", $harga_jual);
+            $temp_harga_pengunjung = $this->input->post('harga_pengunjung');
+            $temp_harga_karyawan = $this->input->post('harga_karyawan');
+            $harga_pengunjung = preg_replace("/[^0-9]/", "", $temp_harga_pengunjung);
+            $harga_karyawan = preg_replace("/[^0-9]/", "", $temp_harga_karyawan);
 
 
             // var_dump($);
             $data = [
                 'nomor_transaksi' => htmlspecialchars($this->input->post('nomor_transaksi', true)),
                 'tgl_transaksi' => date('Y-m-d'),
-                'nama_supplier' => htmlspecialchars($this->input->post('nama_supplier', true)),
+                'kasir' => htmlspecialchars($this->userdata('user'), true)
             ];
 
             // TAMBAH OBAT PEMBELIAN
             $i = 0; 
             foreach($kode as $row){
                 $dat = array(
-                        'kode_obat'=> $row,
+                        'kode_item'=> $row,
                         'nomor_transaksi' => $this->input->post('nomor_transaksi'),
-                        'jenis'=> strtoupper($j[$i]),
                         'jumlah'=> $qty[$i],
-                        'harga_beli'=> $harga_beli[$i],
-                        'harga_jual'=> $fix[$i],
+                        'harga_pengunjung'=> $harga_pengunjung[$i],
+                        'harga_karyawan'=> $harga_karyawan[$i],
                 );
                 $i++;
-                $this->db->insert("obat_pembelian",$dat);
+                $this->db->insert("item_pembelian",$dat);
                 // var_dump($dat);
             }
 
             // TAMBAH TRANSAKSI
-            $this->db->insert('transaksi_pembelian_obat', $data);
+            $this->db->insert('transaksi_item_masuk', $data);
 
 
             // UPDATE HARGA OBAT
@@ -94,13 +89,13 @@ class Pembelian extends CI_Controller {
             
             foreach($kode as $row){
                 $harga = array(
-                        'harga_beli'=> $harga_beli[$index],
-                        'harga_jasa'=> $fix[$index]
+                        'harga_pengunjung'=> $harga_pengunjung[$index],
+                        'harga_karyawan'=> $harga_karyawan[$index]
                 );
                 $index++;
                 $this->db->set($harga);
                 $this->db->where('kode', $row);
-                $this->db->update('jasa');
+                $this->db->update('daftar_item');
             }
 
             $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Data Berhasil Ditambah!</div>');
@@ -112,19 +107,19 @@ class Pembelian extends CI_Controller {
     {
 
         $data = array(
-			'title' => "Detail Pembelian",
-			'menu' => "Detail Pembelian"
+			'title' => "Detail Item Masuk",
+			'menu' => "Detail Item Masuk"
 		);
 
         $this->db->select('*');
-        $this->db->from('obat_pembelian');
-        $this->db->join('jasa', 'jasa.kode = obat_pembelian.kode_obat');
-        $this->db->where('obat_pembelian.nomor_transaksi', $no); 
-        $this->db->where('obat_pembelian.nomor_transaksi', $no); 
-        $data['obat'] = $this->db->get()->result_array();
+        $this->db->from('item_pembelian');
+        $this->db->join('jasa', 'jasa.kode = item_pembelian.kode_item');
+        $this->db->where('item_pembelian.nomor_transaksi', $no); 
+        $this->db->where('item_pembelian.nomor_transaksi', $no); 
+        $data['item'] = $this->db->get()->result_array();
 
 
-        $data['transaksi'] = $this->db->get_where('transaksi_pembelian_obat', ['nomor_transaksi' => $no])->row_array();
+        $data['transaksi'] = $this->db->get_where('transaksi_item_masuk', ['nomor_transaksi' => $no])->row_array();
 
 		$this->load->view('pembelian/detail', $data);
         
@@ -160,7 +155,7 @@ class Pembelian extends CI_Controller {
             // edit data transaksi
             $this->db->set(['nama_supplier' => $supplier]);
             $this->db->where('nomor_transaksi', $no);
-            $this->db->update('transaksi_pembelian_obat');
+            $this->db->update('transaksi_item_masuk');
 
             $i = 0;
             foreach($kode as $row){
@@ -182,11 +177,11 @@ class Pembelian extends CI_Controller {
     public function riwayat()
     {
         $data = array(
-			'title' => "Riwayat Pembelian",
-			'menu' => "Riwayat Pembelian"
-		);
+			'title' => "Riwayat Item Masuk",
+			'menu' => "Riwayat Item Masuk"
+		); 
 
-		$data['item'] = $this->db->get('transaksi_pembelian_obat')->result_array();
+		$data['item'] = $this->db->get('transaksi_item_masuk')->result_array();
 
 		$this->load->view('pembelian/riwayat', $data);
     }
@@ -194,13 +189,13 @@ class Pembelian extends CI_Controller {
     public function stokobat()
     {
         $data = array(
-			'title' => "Stok Obat",
-			'menu' => "Stok Obat"
+			'title' => "Stok Item",
+			'menu' => "Stok Item"
 		);
 
 		$this->db->select('*');
         $this->db->from('stok_akhir');
-        $this->db->join('jasa', 'jasa.kode = stok_akhir.kode_obat');
+        $this->db->join('daftar_item', 'daftar_item.kode = stok_akhir.kode_item');
         $data['stok'] = $this->db->get()->result_array();
 
         // var_dump($da);

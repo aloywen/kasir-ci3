@@ -179,37 +179,33 @@ $(document).ready(function() {
     });
 });
  
-// $(document).ready(function() {
-//   let count = 1
-//     $("#addFieldl").click(function (e) {
-//       e.preventDefault()
-//       count++
-//       $(".isi").append(`
-//         <tr id="row_${count}">
-//           <td class="px-0">
-//             <input data-field-name="kode" type="text" class="l form-control" value="" name="kode[]" id="kode_${count}" autocomplete="off">
-//           </td>
-//           <td class="px-0">
-//             <input data-field-name="obat" type="text" class="l form-control autoBeliobat" value="" name="obat[]" id="obat_${count}" autocomplete="off">
-//           </td>
-//           <td>
-//           <input type="text" class="l form-control" value="" name="jenis[]" id="jenis_${count}">
-//           </td>
-//           <td>
-//             <input type="number" class="l form-control" value="" name="qty[]" id="qty_${count}">
-//           </td>
-//           <td>
-//             <input type="text" class="l form-control" value="" name="hargabeli[]" id="harga_beli_${count}">
-//           </td>
-//           <td class="px-0 d-flex align-items-center">
-//             <input type="text" class="l form-control total" value="" name="hargajual[]" id="harga_jual_${count}">
-//             <div id="delete_${count}" class="btn btn-danger delete_row"><i class="fas fa-trash-alt"></i></div>
-//           </td>
-//         </tr>
+$(document).ready(function() {
+  let count = 1
+    $("#addFieldl").click(function (e) {
+      e.preventDefault()
+      count++
+      $(".isi").append(`
+        <tr id="row_${count}">
+            <input data-field-name="kode" type="hidden" class="l form-control" value="" name="kode[]" id="kode_${count}" autocomplete="off">
+          
+          <td class="px-0">
+            <input data-field-name="item" type="text" class="l form-control autoItemmasuk" value="" name="item[]" id="item_${count}" autocomplete="off">
+          </td>
+          <td>
+            <input type="number" class="l form-control" value="" name="qty[]" id="qty_${count}">
+          </td>
+          <td>
+            <input type="text" class="l form-control" value="" name="hargakaryawan[]" id="harga_karyawan_${count}">
+          </td>
+          <td class="px-0 d-flex align-items-center">
+            <input type="text" class="l form-control total" value="" name="hargapengunjung[]" id="harga_pengunjung_${count}">
+            <div id="delete_${count}" class="btn btn-danger delete_row py-3"><i class="fas fa-trash-alt"></i></div>
+          </td>
+        </tr>
 
-//       `)
-//     });
-// });
+      `)
+    });
+});
 
 $(document).ready(function() {
   let kode = document.getElementsByClassName('isi');
@@ -455,7 +451,7 @@ $(document).ready(function() {
       getTotal();
     }
     
-    function handleBeliobat() {
+    function handleItemmasuk() {
       var fieldName, currentEle
       currentEle = $(this);
       
@@ -471,7 +467,7 @@ $(document).ready(function() {
         source: function (data, cb) {
           // console.log(cb);
           $.ajax({
-            url:"<?php echo base_url();?>pembelian/pembelian/cariobat",
+            url:"<?php echo base_url();?>pembelian/pembelian/cariitem",
             dataType: 'json',
             data: {
               name: data.term,
@@ -481,7 +477,7 @@ $(document).ready(function() {
               var result;
               result = [
                 {
-                  label: 'ga ada obat '+data.term,
+                  label: 'tidak ada item '+data.term,
                   value: ''
                 }
               ];
@@ -512,17 +508,17 @@ $(document).ready(function() {
             rowNo = getID(currentEle)
             // console.log('id',rowNo)
             data = selectedData.item.data;
-            hargabeli = parseInt(data.harga_beli)
-            hargajual = parseInt(data.harga_jasa)
+            hargakaryawan = parseInt(data.harga_karyawan)
+            hargapengunjung = parseInt(data.harga_pengunjung)
+            $('#qty_'+rowNo).val(1)
             $('#kode_'+rowNo).val(data.kode)
-            $('#harga_beli_'+rowNo).val(hargabeli.toLocaleString('id-ID'))
-            $('#harga_jual_'+rowNo).val(hargajual.toLocaleString('id-ID'))
+            $('#harga_karyawan_'+rowNo).val(hargakaryawan.toLocaleString('id-ID'))
+            $('#harga_pengunjung_'+rowNo).val(hargapengunjung.toLocaleString('id-ID'))
 
           }
         }
       })
 
-      getTotal();
     }
 
     function handlePasien() {
@@ -626,7 +622,7 @@ $(document).ready(function() {
      
     function registerEvents() {
       $(document).on('focus', '.autoBeliobatEdit', handleBeliobatEdit)
-      $(document).on('focus', '.autoBeliobat', handleBeliobat)
+      $(document).on('focus', '.autoItemmasuk', handleItemmasuk)
       $(document).on('focus', '.autocomplete', handleAuto)
       $(document).on('focus', '.autopasien', handlePasien)
       $(document).on('change', '.qty', handleTotal)

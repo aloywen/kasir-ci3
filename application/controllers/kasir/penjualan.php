@@ -354,13 +354,13 @@ class Penjualan extends CI_Controller {
 
     public function ksjask() {
         $this->db->set(['posting' => 'belum']);
-        $this->db->where('no_kwitansi >=', '10/27/325');
-        $this->db->where('no_kwitansi <=', '10/27/365');
+        $this->db->where('no_kwitansi >=', '08/03/017339');
+        $this->db->where('no_kwitansi <=', '08/04/017381');
         $this->db->update('obat_pasien');
 
         $this->db->set(['posting' => 'belum']);
-        $this->db->where('no_kwitansi >=', '10/27/325');
-        $this->db->where('no_kwitansi <=', '10/27/365');
+        $this->db->where('no_kwitansi >=', '08/03/017339');
+        $this->db->where('no_kwitansi <=', '08/04/017381');
         $this->db->update('transaksi_pasien');
     }
 }
