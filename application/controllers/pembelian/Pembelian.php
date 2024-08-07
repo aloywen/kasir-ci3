@@ -9,7 +9,7 @@ class Pembelian extends CI_Controller {
         is_logged_in();
     }
     
-    public function index() {
+    public function riwayatmasuk() {
 		$data = array(
 			'title' => "Item Masuk",
 			'menu' => "Item Masuk"
@@ -17,7 +17,7 @@ class Pembelian extends CI_Controller {
 
 		$data['item'] = $this->db->get('transaksi_item_masuk')->result_array();
 
-		$this->load->view('pembelian/index', $data);
+		$this->load->view('pembelian/riwayat', $data);
 	}
 
 	public function add()
@@ -50,28 +50,28 @@ class Pembelian extends CI_Controller {
 	public function store()
     {
 
-            $kode = $this->input->post('kode_item');
+            $kode = $this->input->post('kode');
             $qty = $this->input->post('qty');
-            $temp_harga_pengunjung = $this->input->post('harga_pengunjung');
-            $temp_harga_karyawan = $this->input->post('harga_karyawan');
+            $temp_harga_pengunjung = $this->input->post('hargapengunjung');
+            $temp_harga_karyawan = $this->input->post('hargakaryawan');
             $harga_pengunjung = preg_replace("/[^0-9]/", "", $temp_harga_pengunjung);
             $harga_karyawan = preg_replace("/[^0-9]/", "", $temp_harga_karyawan);
 
 
-            // var_dump($);
             $data = [
                 'nomor_transaksi' => htmlspecialchars($this->input->post('nomor_transaksi', true)),
                 'tgl_transaksi' => date('Y-m-d'),
-                'kasir' => htmlspecialchars($this->userdata('user'), true)
+                'kasir' => htmlspecialchars($this->session->userdata('user'), true)
             ];
-
+            // var_dump($data);
+            
             // TAMBAH OBAT PEMBELIAN
             $i = 0; 
             foreach($kode as $row){
                 $dat = array(
                         'kode_item'=> $row,
                         'nomor_transaksi' => $this->input->post('nomor_transaksi'),
-                        'jumlah'=> $qty[$i],
+                        'qty'=> $qty[$i],
                         'harga_pengunjung'=> $harga_pengunjung[$i],
                         'harga_karyawan'=> $harga_karyawan[$i],
                 );
@@ -99,7 +99,7 @@ class Pembelian extends CI_Controller {
             }
 
             $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Data Berhasil Ditambah!</div>');
-            redirect('pembelian/pembelian/riwayat');
+            redirect('pembelian/pembelian/riwayatmasuk');
     
     }
 

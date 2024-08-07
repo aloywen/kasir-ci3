@@ -502,12 +502,12 @@ $(document).ready(function() {
         autoFocus: true,
         minLength: 1,
         select: function(event, selectedData) {
-          console.log(selectedData);
+          // console.log(selectedData);
           if(selectedData && selectedData.item && selectedData.item.data){
             var rowNo, data;
             rowNo = getID(currentEle)
-            // console.log('id',rowNo)
             data = selectedData.item.data;
+            console.log(data)
             hargakaryawan = parseInt(data.harga_karyawan)
             hargapengunjung = parseInt(data.harga_pengunjung)
             $('#qty_'+rowNo).val(1)

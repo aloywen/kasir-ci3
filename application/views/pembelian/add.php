@@ -71,7 +71,7 @@ $this->load->view('dist/_partials/header');
                         <tr id="row_1">
                             <input data-field-name="kode" type="hidden" class="l form-control" value="" name="kode[]" id="kode_1" autocomplete="off">
                           <td class="px-0">
-                            <input data-field-name="obat" type="text" class="l form-control autoItemmasuk" value="" name="obat[]" id="obat_1" autocomplete="off">
+                            <input data-field-name="item" type="text" class="l form-control autoItemmasuk" value="" name="item[]" id="item_1" autocomplete="off">
                           </td>
                             <td>
                                 <input type="number" class="l form-control" value="" name="qty[]" id="qty_1">
