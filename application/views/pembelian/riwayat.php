@@ -28,7 +28,7 @@ $this->load->view('dist/_partials/header', $menu);
                             <th scope="col"></th>
                             <th scope="col">Nomor Transaksi</th>
                             <th scope="col">Tanggal Transaksi</th>
-                            <th scope="col">Nama Supplier</th>
+                            <th scope="col">Nama Kasir</th>
                           </tr>
                         </thead>
  
@@ -40,7 +40,7 @@ $this->load->view('dist/_partials/header', $menu);
                             </td>
                             <td><?= $r['nomor_transaksi']; ?></td>
                             <td><?= date('d-m-Y', strtotime($r["tgl_transaksi"])); ?></td>
-                            <td><?= $r['nama_supplier']; ?></td>
+                            <td><?= $r['kasir']; ?></td>
                           </tr>
                           <?php endforeach; ?>
                         </tbody>

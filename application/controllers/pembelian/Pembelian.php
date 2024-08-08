@@ -113,8 +113,7 @@ class Pembelian extends CI_Controller {
 
         $this->db->select('*');
         $this->db->from('item_pembelian');
-        $this->db->join('jasa', 'jasa.kode = item_pembelian.kode_item');
-        $this->db->where('item_pembelian.nomor_transaksi', $no); 
+        $this->db->join('daftar_item', 'daftar_item.kode = item_pembelian.kode_item');
         $this->db->where('item_pembelian.nomor_transaksi', $no); 
         $data['item'] = $this->db->get()->result_array();
 
@@ -125,56 +124,54 @@ class Pembelian extends CI_Controller {
         
     }
      
-    public function editpembelian($no)
+    public function edititemmasuk($no)
     { 
         
-            $supplier = $this->input->post('nama_supplier');
             $jumlah = $this->input->post('qty');
-            $jenis = $this->input->post('jenis');
-            $harga_beli = $this->input->post('hargabeli');
-            $harga_jual = $this->input->post('hargajual');
+            $temp_harga_karyawan = $this->input->post('hargakaryawan');
+            $temp_harga_pengunjung = $this->input->post('hargapengunjung');
             $kode = $this->input->post('kode');
+
+            $harga_karyawan = preg_replace("/[^0-9]/", "", $temp_harga_karyawan);
+            $harga_pengunjung = preg_replace("/[^0-9]/", "", $temp_harga_pengunjung);
+
+            $this->db->where('nomor_transaksi', $no);
+            $this->db->delete('item_pembelian');
 
             // update data pembelian
             $index = 0;
             foreach($kode as $row){
-                $update = array(
-                        'kode_obat'=> $row,
-                        'jenis'=> strtoupper($jenis[$index]),
-                        'jumlah'=> $jumlah[$index],
-                        'harga_beli'=> $harga_beli[$index],
-                        'harga_jual'=> $harga_jual[$index]
+                $dat = array(
+                        'kode_item'=> $row,
+                        'nomor_transaksi' => $no,
+                        'qty'=> $jumlah[$index],
+                        'harga_karyawan'=> $harga_karyawan[$index],
+                        'harga_pengunjung'=> $harga_pengunjung[$index]
                 );
                 $index++;
-                $this->db->set($update);
-                $this->db->where('kode_obat', $row);
-                $this->db->update('obat_pembelian');
-                // var_dump($update);
+                $this->db->insert('item_pembelian',$dat);
+                // var_dump($dat);
             }
 
-            // edit data transaksi
-            $this->db->set(['nama_supplier' => $supplier]);
-            $this->db->where('nomor_transaksi', $no);
-            $this->db->update('transaksi_item_masuk');
 
             $i = 0;
             foreach($kode as $row){
                 $harga = array(
-                        'harga_beli'=> $harga_beli[$i],
-                        'harga_jasa'=> $harga_jual[$i]
+                        'harga_karyawan'=> $harga_karyawan[$i],
+                        'harga_pengunjung'=> $harga_pengunjung[$i]
                 );
                 $i++;
                 $this->db->set($harga);
                 $this->db->where('kode', $row);
-                $this->db->update('jasa');
+                $this->db->update('daftar_item');
             }
 
             $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Data Berhasil Diubah!</div>');
-            redirect('pembelian/pembelian/riwayat');
+            redirect('pembelian/pembelian/history');
         
     }
 
-    public function riwayat()
+    public function history()
     {
         $data = array(
 			'title' => "Riwayat Item Masuk",
@@ -186,7 +183,7 @@ class Pembelian extends CI_Controller {
 		$this->load->view('pembelian/riwayat', $data);
     }
 
-    public function stokobat()
+    public function stokitem()
     {
         $data = array(
 			'title' => "Stok Item",

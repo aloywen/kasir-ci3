@@ -33,7 +33,7 @@ $this->load->view('dist/_partials/header');
 
             <div class="card">
               <div class="card-body">
-                <form action="<?= base_url('pembelian/pembelian/editpembelian/'). $transaksi['nomor_transaksi']; ?>" method="post">
+                <form action="<?= base_url('pembelian/pembelian/edititemmasuk/'). $transaksi['nomor_transaksi']; ?>" method="post">
                         
                   <div class="form-row">
                       <div class="form-group d-flex col-md-5 align-items-center">
@@ -51,55 +51,49 @@ $this->load->view('dist/_partials/header');
                       </div>
                   </div>
 
-
-                  <div class="form-row mt-1 r">
-                      <div class="form-group d-flex align-items-center col-md-5 row">
-                        <label for="nama_supplier" class="col-md-6">Nama Supplier</label>
-                        <input data-field-name="supplier" type="text" name="nama_supplier" id="nama_supplier" class="form-control col-md-5 l" value="<?= $transaksi['nama_supplier'] ?>">
-                      </div>
-                  </div>
-
  
 
                   <table class="table" style="width:100%">
                       <thead>
                         <tr>
-                          <th >Kode</th>
-                          <th >Nama Obat</th>
-                          <th >Jenis</th>
+                          <th >Nama Item</th>
                           <th >Qty</th>
-                          <th >Harga Beli</th>
-                          <th >Harga Jual</th>
+                          <th >Harga Karyawan</th>
+                          <th >Harga Pengunjung</th>
                         </tr>
                       </thead>
                       <tbody class="isi">
-                        <?php foreach ($obat as $o) : ?>
-                        <tr id="row_0">
+                        <?php $i = 0 ?>
+                        <?php foreach ($item as $o) : ?>
+                        <tr id="row_<?= $i ?>">
+                          <!-- <td class="px-0"> -->
+                            <input data-field-name="kode" type="hidden" class="l form-control" value="<?= $o['kode']?>" name="kode[]" id="kode_<?= $i ?>" autocomplete="off">
+                          <!-- </td>  -->
                           <td class="px-0">
-                            <input data-field-name="kode" type="text" class="l form-control" value="<?= $o['kode']?>" name="kode[]" id="kode_1" autocomplete="off">
-                          </td> 
-                          <td class="px-0">
-                            <input data-field-name="obat" type="text" class="l form-control autoBeliobatEdit" value="<?= $o['nama']?>" name="obat[]" id="obat_1" autocomplete="off">
+                            <input data-field-name="item" type="text" class="l form-control autoBeliitemEdit" value="<?= $o['nama']?>" name="item[]" id="item_<?= $i ?>" autocomplete="off">
                           </td>
-                          <td>
-                            <input type="text" class="l form-control" value="<?= $o['jenis']?>" name="jenis[]" id="jenis_1">
-                        </td>
                             <td>
-                                <input type="number" class="l form-control" value="<?= $o['jumlah']?>" name="qty[]" id="qty_1">
+                                <input type="number" class="l form-control" value="<?= $o['qty']?>" name="qty[]" id="qty_<?= $i ?>">
                             </td>
                           <td>
-                            <input type="text" class="l form-control" value="<?= $o['harga_beli']?>" name="hargabeli[]" id="harga_beli_1">
+                            <input type="text" class="l form-control" value="<?= $o['harga_karyawan']?>" name="hargakaryawan[]" id="harga_karyawan_<?= $i ?>">
                           </td>
-                          <td>
-                            <input type="text" class="l form-control total" value="<?= $o['harga_jual']?>" name="hargajual[]" id="harga_jual_1">
+                          <td class="">
+                            <div class="d-flex align-item-center">
+
+                              <input type="text" class="l form-control total" value="<?= $o['harga_pengunjung']?>" name="hargapengunjung[]" id="harga_pengunjung_<?= $i ?>">
+                              
+                              <div id="delete_<?= $i ?>" class="btn btn-danger py-2 delete_row"><i class="fas fa-trash-alt"></i></div>
+                            </div>
                           </td>
                         </tr>
+                        <?php $i++ ?>
                         <?php endforeach; ?>
                         
                       </tbody>
                     </table>
 
-                    <button type="submit" class="btn btn-success">Update Data</button>
+                    <button type="submit" class="btn btn-warning py-3 px-4 mt-5" style="font-size:20px"">Update Data</button>
                     </form>
                   </div>
             </div>
